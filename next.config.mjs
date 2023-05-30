@@ -7,7 +7,17 @@ await import("./src/env.mjs");
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ycyfbfowifswnjjhckzk.supabase.co',
+        pathname: '/storage/v1/object/public/Travel_images/**',
+      },
+    ],
+  },
 
+  
   /**
    * If you have `experimental: { appDir: true }` set, then you must comment the below `i18n` config
    * out.
