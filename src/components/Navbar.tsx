@@ -45,16 +45,16 @@ export default function Navbar() {
          </div>
         </li>
         <li>
-          <Link href="/" className="block py-2 pl-3 pr-4  rounded  hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0">Home</Link>
+          <Link href="/" className="block py-2 pl-3 pr-4  rounded  hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0" onClick={handleNav}>Home</Link>
         </li>
         <li>
-          <Link href="/About" className="block py-2 pl-3 pr-4 rounded hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0">About Us</Link>
+          <Link href="/about" className="block py-2 pl-3 pr-4 rounded hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0"  onClick={handleNav}>About Us</Link>
         </li>
         <li>
-          <Link href="/Payments" className="block py-2 pl-3 pr-4  rounded hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0">Payments</Link>
+          <Link href="/payments" className="block py-2 pl-3 pr-4  rounded hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0"  onClick={handleNav}>Payments</Link>
         </li>
         <li>
-          <Link href="/Contact" className="block py-2 pl-3 pr-4 rounded hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0">Contact Us</Link>
+          <Link href="/contact" className="block py-2 pl-3 pr-4 rounded hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-700 md:p-0"  onClick={handleNav}>Contact Us</Link>
         </li>
       </ul>
     </div>

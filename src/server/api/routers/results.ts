@@ -1,19 +1,23 @@
+import { z } from "zod";
+import { TRPCError } from "@trpc/server";
+
+
+
 import {
-    createTRPCRouter,
-    publicProcedure,
-  } from "~/server/api/trpc";
-  
-  
-  
-  export const cruisesRouter = createTRPCRouter({
-  
-  
-    getByValue: publicProcedure
+  createTRPCRouter,
+  publicProcedure,
+} from "~/server/api/trpc";
+
+
+
+export const resultsRouter = createTRPCRouter({
+
+  getByValue: publicProcedure
     .query(async({ ctx }) => {
-     const cruises = await ctx.prisma.profile.findMany({
+     const results = await ctx.prisma.profile.findMany({
         where: {
             trip_index: {
-                hasSome: ["CRUISES"] 
+              search: 'tours',
         } },
         select: {
             rating: true,
@@ -35,4 +39,5 @@ import {
   
       }),
   
-  });
+
+});

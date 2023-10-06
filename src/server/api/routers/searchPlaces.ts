@@ -4,6 +4,8 @@ import {
   } from "~/server/api/trpc";
   import { z } from "zod";
   import { TRPCError } from "@trpc/server";
+  import { Prisma } from '@prisma/client'
+
 
   export const searchPlacesRouter = createTRPCRouter({
   
@@ -12,22 +14,28 @@ import {
     getValue: publicProcedure
     .input(z.object({ searchValue: z.string() }))
     .query(async ({ ctx, input: {searchValue} }) => {
-     const places = await ctx.prisma.profile.findFirst({
+      const locations = await ctx.prisma.locations.findMany({
         where: {
-            OR: [
-                { situated: { hasSome: searchValue } },
-                { cities: { hasSome: searchValue } },
-              ],
-          },
-          select: {cities: true,
-                  situated: true}
+          location: { contains: searchValue, mode: 'insensitive' },
+        },
+        select: {location: true}
       });
+
+      const cities = await ctx.prisma.cities.findMany({
+        where: {
+          city: { contains: searchValue, mode: 'insensitive' },
+        },
+        select: {city: true}
+      });
+
+
+      const places = [...locations, ...cities];
     
-        if (!places) throw new TRPCError({ code: "NOT_FOUND" });
-        return places
+        if (places.length === 0) return []
+        const results =  places.flatMap(place => Object.values(place));
+        return results
+    })
 
   
-      }),
-
   });
 

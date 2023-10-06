@@ -15,12 +15,12 @@ import {
     .input(z.object({ place: z.string() }))
     .query(async ({ ctx, input: {place} }) => {
      const popular = await ctx.prisma.profile.findMany({
-        where: {
-            OR: [
-                { situated: { hasSome: place } },
-                { cities: { hasSome: place } },
-              ],
-          },
+      include: { where: {
+        OR: [
+            { location: { hasSome: place } },
+            { cities: { hasSome: place } },
+          ],
+      },},
         select: {
             rating: true,
             title: true,

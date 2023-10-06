@@ -36,7 +36,7 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
     <div key={id}  className="max-w-sm bg-white border border-gray-700 rounded-lg shadow flex-col px-3 pt-3 flex mb-4 sm:mb-0 z-0">
         <div className="flex px-2">
             <Image src={image} alt="" width={400} height={50} className="rounded-lg" />
-            </div>
+        </div>
             <div className="flex flex-col justify-between py-2 ">
             <div className="flex items-center lg:text-xl">
                 <IoMdStar color="#facc15"/>
@@ -58,7 +58,7 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
                     <h1 className="font-bold lg:text-2xl">R {price_excl || price_incl}</h1>
                     </div>
                 <div>
-                <Link href={`/profiles/${id}`}>
+                     <Link href={`/profiles/${id}`}>
                     <div  className="bg-blue-700 hover:bg-blue-800 text-white text-sm lg:text-lg p-2 lg:p-2.5 rounded-lg">View Deal</div>
                     </Link>
                 </div>

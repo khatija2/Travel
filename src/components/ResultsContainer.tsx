@@ -153,7 +153,7 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
               <div className="sm:grid grid-cols-3 2xl:grid-cols-5 gap-4 lg:gap-6 2xl:gap-10">
                 {renderCards()}
               </div>
-             <div className="flex flex-row items-center justify-center  sm:p-4 lg:p-8 flex-nowrap">
+             <div className="flex flex-row items-center justify-center  sm:p-4 lg:p-8 flex-nowrap z-0">
                 <ButtonPrev onClick={handlePrev} disabled={isFirstSlide} tiny="tiny" />
                {pageIndex()}
                 <ButtonNext onClick={handleNext} disabled={isLastSlide} tiny="tiny"/>

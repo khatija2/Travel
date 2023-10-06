@@ -28,7 +28,7 @@ const Cruises:NextPage = () => {
     <div>
         <div className="bg-amalfi z-0 flex flex-col items-center justify-center bg-cover bg-center shadow-lg h-full w-full sm:h-1/2">
         <div className="text-3xl sm:text-6xl font-bold text-white pt-4 sm:pt-10 font-nunito">Cruises</div>
-        <PageSearch category="Destination" category2="Budget"/>
+        <PageSearch category="Destination" category2="Budget" landing={false}/>
         </div>
         <ResultsContainer info={cruises}/>
     </div>

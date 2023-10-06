@@ -12,7 +12,7 @@ import {
     .query(async({ ctx }) => {
      const tours = await ctx.prisma.profile.findMany({
         where: {
-            trip: {
+            trip_index: {
                 hasSome: ["TOURS"] 
         } },
         select: {

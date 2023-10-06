@@ -1,6 +1,11 @@
 
+import React, {useState, useEffect} from 'react'
+import type {
+  NextPage,
+  GetStaticPaths,
+  GetStaticPropsContext,
+} from "next";
 
-import React from 'react'
 import Image from 'next/image'
 import Search from "./Search"
 import Popular from "./Popular"
@@ -8,20 +13,17 @@ import Specials from "./Specials"
 import Newsletter from "./Newsletter"
 import {BsChatRightDots} from "react-icons/bs"
 import {AiOutlineCheck} from 'react-icons/ai'
-import Calendar from "../modals/Calendar"
-import Holiday_types from "../modals/Holiday_types"
-import Destination from "../modals/Destination"
+import PageSearch from "../search-bars/PageSearch"
+import ErrorPage from "next/error";
+import { api } from "~/utils/api";
+import { ssgHelper } from "~/server/api/ssgHelper";
 
 
-const Landing = () => {
+const Landing: NextPage = () => {
   return (
    <div className="font-figtree">
-    <Destination closeModal landing={true}/>
-    <Holiday_types/>
-    <Calendar/> 
-    <div className="z-50 fixed bottom-2 sm:bottom-4 right-2 sm:right-4"><button className="bg-indigo-900 border border-gray-50 p-2 text-xs sm:text-lg flex flex-row items-center justify-center gap-1 shadow-lg text-white rounded-lg hover:opacity-50"><BsChatRightDots/>Let's Chat</button></div>
     <div className=" bg-mauritiusBanner z-0 flex flex-col items-center justify-center bg-cover bg-center h-full w-full sm:h-1/2">
-      <Search/>
+      <PageSearch category="Destination" category2="Travel category" landing={true} />
       <Specials/>
     </div>
     <Popular/>  
@@ -45,6 +47,9 @@ const Landing = () => {
    </div>
   )
 }
+
+
+
 
 export default Landing
 

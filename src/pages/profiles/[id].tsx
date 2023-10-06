@@ -26,7 +26,7 @@ const Profile: NextPage<{ id: string }> = ({id}) => {
     const { data: profile } = api.profiles.getById.useQuery({ id });
 
     if (!profile) {
-        return <ErrorPage statusCode={404} />;;
+        return <ErrorPage statusCode={404} />;
       }
 
 

@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -9,10 +9,10 @@ datasource db {
 }
 
 model Profile {
-  createdAt     DateTime   @default(now())
+  createdAt     DateTime   @default(now()) @db.Timestamp
   title         String     @db.VarChar(100)
   description   String?    @db.VarChar(450)
-  cities        String[]
+  cities        Cities[]
   nights        String
   accommodation String     @db.VarChar(250)
   flights       String     @db.VarChar(250)
@@ -25,10 +25,10 @@ model Profile {
   id            String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   price_incl    String?    @db.VarChar(8)
   rating        Decimal?
-  trip          Trip[]     @map("trip_index")
+  trip_index    Trip[]    
+  location      Locations[]
   deal          Deals?
   itinerary     Itinerary?
-  situated      String[]         
 }
 
 model Itinerary {
@@ -78,4 +78,14 @@ enum Trip {
   FLIGHTS
 }
 
+model Locations {
+  id          Int   @id @default(autoincrement())
+  location    String
+  profile     Profile[]
+}
 
+model Cities {
+  id          Int   @id @default(autoincrement())
+  city    String
+  profile     Profile[]
+}

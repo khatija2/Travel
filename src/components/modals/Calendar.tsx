@@ -1,506 +1,383 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {SlArrowRight} from 'react-icons/sl'
 import {SlArrowLeft} from 'react-icons/sl'
 import {RiCloseFill} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
+import { generateDate } from "~/hooks/generateDate"
+import dayjs from "dayjs"
+import toast from "react-hot-toast"
+
 
 
 type CalendarProps = {
-    closeCalendarModal: () => void
+    closeCalendarModal: () => void;
+    onDepartureSelected: (item: string | null) => void;
+	onReturnSelected: (item: string | null) => void;
+	onLegSelected: (item: string) => void;
+	onRoundSelected: (item: string) => void;
+	selectedDeparture: string | null;
+	selectedReturn: string | null;
+	selectedLeg: string
+	selectedRound: string
   }
 
-const Calendar: React.FC<CalendarProps> = ({closeCalendarModal}) => {
+const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelected, onReturnSelected, onLegSelected, onRoundSelected, selectedDeparture, selectedReturn, selectedLeg, selectedRound}) => {
+  
+
+ const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]  
+ const days = ["S", "M", "T", "W", "T", "F", "S"]; 
+ const currentDate = dayjs();
+ const [today, setToday] = useState(currentDate);
+ const [selectDate, setSelectDate] = useState(currentDate);
+ const [selectReturn, setSelectReturn] = useState(currentDate);
+ const [leg, setLeg] = useState("depart");
+ const [round, setRound] = useState("return")
+ const [hoveredDate, setHoveredDate] = useState(null);
+ const [departDate, setDepartDate] = useState(null);
+ const [returnDate, setReturnDate] = useState(null);
+ const [chosenDate, setChosenDate] = useState(selectedDeparture)
+ const [chosenReturnDate, setChosenReturnDate] = useState(selectedReturn)
+ const [chosenLeg, setChosenLeg] = useState(selectedLeg)
+ const [chosenRound, setChosenRound] = useState(selectedRound)
+
+
+
+  var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+  dayjs.extend(isSameOrBefore)
+  var customParseFormat = require('dayjs/plugin/customParseFormat')
+  dayjs.extend(customParseFormat)
+  var isBetween = require('dayjs/plugin/isBetween')
+  dayjs.extend(isBetween)
+
 
 const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
 useOnClickOutside(ref, () => closeCalendarModal());
 
+const handleDates = (date: any) => {
+	if (leg === "depart" && date.isAfter(currentDate)) {
+	setSelectDate(date)
+	setDepartDate(date.format('DD/MM/YYYY'))
+	setChosenDate(null)
+	setChosenReturnDate(null)
+	if (round === "return") {
+	setLeg("return")
+	setChosenLeg("return")
+	 }}
+	else if ( round === "return" && leg === "return" && date > selectDate) {
+	setSelectReturn(date)
+	setReturnDate(date.format('DD/MM/YYYY'))}
+}
+
+
+
+const handleClear = () => {
+	setSelectDate(currentDate)
+	setSelectReturn(currentDate)
+	setLeg("depart")
+	setHoveredDate(null)
+	setChosenDate(null)
+	setChosenReturnDate(null)
+	setChosenLeg("depart")	
+	setChosenRound("return")
+}
+
+
+const handleDateMouseEnter = (date: any) => {
+    if (leg === "return" && date.isAfter(selectDate, 'day')) {
+      setHoveredDate(date);
+    }
+
+  };
+
+  const handleDateMouseLeave = () => {
+	setHoveredDate(null)}
+  
+  
+
+  const isHovered = (date: any) => {
+    if (leg === "return" && hoveredDate !== null)  {
+      if( date.isAfter(selectDate, 'day') && date.isSameOrBefore(hoveredDate, 'day')) {
+		return true
+	  }
+    }
+    return false;
+  };
+
+
+const isInRange = (date: any) => {
+    if (leg === "return"  && selectReturn !== currentDate )  {
+      if(date.isAfter(selectDate, 'day') && date.isBefore(selectReturn, 'day') ) {
+		return true
+	  }
+    }
+    return false;
+  };
+
+
+  const chosenRange = (date:any) => {
+	if (chosenDate !== null && chosenReturnDate !== null) {
+	if(date.isAfter(dayjs(chosenDate, "DD-MM-YYYY")) && date.isBefore(dayjs(chosenReturnDate, "DD-MM-YYYY"))   ) {
+	return true
+	}
+	}
+  }
+
+const chooseSingle = () => {
+	setRound("single")
+	setChosenLeg("depart")
+	setChosenRound("single")
+	handleClear()
+	setReturnDate(null)
+}
+
+const chooseReturn = () => {
+	setRound("return")
+	setChosenRound("return")
+	handleClear()
+}
+
+
+const handleDoneClick = () => {
+	if (round === "single" && departDate === null) {
+		toast.error("Please select a departure date")
+	}
+	if (round === "return" &&  departDate === null && chosenDate === null) {
+		toast.error("Please select a departure date")
+	}
+	if (round === "return" && departDate!== null && returnDate === null) {
+		toast.error("Please select a return date")
+	}
+	if (round === "return") {
+		onRoundSelected("return")
+	}
+	if (round === "single") {
+		onRoundSelected("single")
+		
+	}	
+	if (chosenRound === "return" && chosenReturnDate !== null){
+		closeCalendarModal()
+	}
+	if ( chosenRound === "single" && chosenDate !== null){
+		onRoundSelected("single")
+		closeCalendarModal()
+	}
+	if (round === "return" && returnDate !== null) {
+	onDepartureSelected(departDate)
+	onReturnSelected(returnDate);
+	onLegSelected("depart")
+    closeCalendarModal()	
+	}
+	if (round === "single"  && departDate !== null ) {
+	onDepartureSelected(departDate)
+	onReturnSelected(returnDate);
+	onLegSelected("depart")
+	closeCalendarModal()
+	}
+
+  };
+
   return (
-    <div className="absolute z-50 w-full items-center justify-center max-h-full translate-y-28 flex">
-        <div ref={ref} className="flex flex-col items-center justify-center w-5/6 p-1 rounded-lg shadow-2xl border border-gray-200 bg-white lg:w-3/4 2xl:w-1/2 ">
+    <div className="absolute z-50 top-50  lg:w-4/5 -translate-x-6 sm:translate-x-0 translate-y-24 sm:translate-y-44 flex justify-center">
+        <div ref={ref} className="flex flex-col items-center justify-center w-full sm:w-9/10 p-1 rounded-lg shadow-2xl border border-gray-200 bg-white 2xl:w-1/2 ">
             <div className="flex items-center justify-start w-full">
-                <button onClick={closeCalendarModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
+                <button type="button" onClick={closeCalendarModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
                 <RiCloseFill/>
                 </button>
             </div>
-        <div className="flex items-center justify-end  w-full pr-4 sm:pr-6">
-            <div className="bg-gray-200 rounded-full p-0.5 sm:p-1 text-xs sm:text-sm my-1 sm:my-2  ">
-                <button className="bg-transparent text-gray-400 rounded-full px-1.5 sm:px-2 py-1 sm:py-1.5">One Way</button>
-                <button className="bg-white rounded-full px-1.5 sm:px-2 py-1 sm:py-1.5">Return</button>
+        <div className="flex items-center justify-between pt-2  w-full pr-4 sm:pr-6">
+            <div>
+                <div className="p-1 text-xs sm:text-base ml-1 lg:pl-24 flex-wrap ">{leg === "depart" || chosenLeg === "depart" ? "Earliest Departure ..." : "Latest Return ..." }</div>
+               
+            </div>
+            <div className="bg-gray-200 rounded-full p-0.5 sm:p-1 sm:text-sm my-1 sm:my-2  ">
+                <button className={` ${round !== "return" || chosenRound === "single"  ? "bg-white" : "bg-transparent text-gray-400" }  text-xs rounded-full px-1.5 sm:px-2 py-1 sm:py-1.5`} onClick={() => chooseSingle() } >One Way</button>
+                <button className={`${round !== "single" && chosenRound === "return" ? "bg-white" : "bg-transparent text-gray-400" } rounded-full text-xs px-1.5 sm:px-2 py-1 sm:py-1.5`} onClick={() => chooseReturn() }>Return</button>
             </div>
         </div>
-        <div className=" sm:flex flex-row justify-center items-center sm:w-4/5 gap-4 ">
-            <div>
-                <div className="pt-6 pb-2">
-                    <div className="px-4 flex items-center justify-between">
-                        <span  className="text-base font-bold text-gray-800">October 2020</span>
-                        <div className="flex items-center">
-                            <span className="sr-only">Previous month</span>
-                            <button className="focus:text-gray-400 hover:text-gray-400 text-gray-800">
-                            <SlArrowLeft size={16}/>
-                            </button>
-                            <span className="sr-only sm:hidden">Next month</span>
-                            <button className="focus:text-gray-400 hover:text-gray-400 ml-3 text-gray-800 sm:hidden"> 
-                            <SlArrowRight size={16}/>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-between pt-6 overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Mo</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Tu</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">We</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Th</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Fr</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Sa</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Su</p>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="pt-4">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">1</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">2</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">3</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">4</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">5</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">6</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">7</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="w-full h-full">
-                                            <div className="flex items-center justify-center w-full rounded-lg cursor-pointer">
-                                                <a  role="link"  className="focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-sky-700 focus:bg-sky-500 hover:bg-sky-500 text-base w-8 h-8 flex items-center justify-center font-medium text-white bg-sky-700 rounded-full">8</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">9</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">10</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">11</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">12</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">13</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">14</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">15</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">16</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">17</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">18</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">19</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">20</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">21</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">22</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">23</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">24</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">25</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">26</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">27</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">28</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">29</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">30</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <div className="flex flex-row justify-center items-center relative  ">
+
+                <div className="pt-6 pb-2">          
+                <div className="flex gap-1 sm:divide-x justify-center h-full px-3 items-center sm:flex-row flex-col">
+			<div className="w-70 h-70 lg:w-96 ">
+				<div className="flex justify-between items-center px-2 flex-row">
+					<div className="select-none font-semibold flex flex-row gap-1.5">
+						<span>{months[today.month()]}</span><span>{today.year()}</span>
+					</div>
+					<div className="flex gap-2 items-center ">
+						<SlArrowLeft
+							className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:scale-105 transition-all"
+							onClick={() => {
+								setToday(today.month(today.month() - 1));
+							}}
+						/>
+						<h1
+							className=" cursor-pointer hover:scale-105 transition-all"
+							onClick={() => {
+								setToday(currentDate);
+							}}
+						>
+                            </h1>
+						<SlArrowRight
+							className="w-4 h-4 cursor-pointer hover:scale-105 transition-all sm:hidden"
+							onClick={() => {
+								setToday(today.month(today.month() + 1))
+							}}
+						/>
+					</div>
+				</div>
+				<div className="grid grid-cols-7 ">
+					{days.map((day, index) => {
+						return (
+							<h1
+								key={index}
+								className="text-sm text-center h-12 w-12 sm:h-10 sm:w-10 grid place-content-center text-gray-500 select-none"
+							>
+								{day}
+							</h1>
+						);
+					})}
+				</div>
+
+				<div className=" grid grid-cols-7 ">
+					{generateDate(today.month(), today.year()).map(
+						({ date, currentMonth}, index) => {
+							return (
+								<div
+									key={index}
+									className="p-2 sm:p-1.5 text-center h-12 sm:h-10 grid place-content-center text-sm"
+								>
+									<h1
+										className={`
+											${currentMonth ? "" : "text-gray-400"}
+											${(date
+												.toDate()
+												.toDateString() === currentDate.toDate()
+												.toDateString()) ? "text-gray-500" :
+												(selectDate.toDate().toDateString() === date.toDate().toDateString() || selectReturn.toDate().toDateString() === date.toDate().toDateString() ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' )
+												: "" )	
+												}
+												${(chosenDate === date.format('DD/MM/YYYY')) ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' ) : "" }
+												${(chosenReturnDate === date.format('DD/MM/YYYY')) ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' ) : "" }
+												${isHovered(date) ? (currentMonth ? 'bg-sky-300' : 'bg-white') : ''}
+												${isInRange(date) ? (currentMonth ? 'bg-sky-300' : 'bg-white') : ''}
+												${chosenRange(date) ? (currentMonth ? 'bg-sky-300' : 'bg-white') : ''}
+												${leg === "depart" ? (currentMonth ? 'hover:bg-sky-300' : 'bg-white') : ''}
+											h-10 w-10 sm:h-8 sm:w-8  grid place-content-center transition-all cursor-pointer select-none
+										`}
+										onClick={() => 
+											handleDates(date)
+										}
+										onMouseEnter={() =>  handleDateMouseEnter(date)}
+										onMouseLeave={handleDateMouseLeave}
+											
+
+										
+									>
+										{date.date()}
+									</h1>
+								</div>
+							);
+						}
+					)}
+				</div>
+		
+			
+		</div>
                 </div>
                 
             </div>
 
 
             <div className="hidden sm:flex">
-                <div className="md:p-8 pt-6 pb-2 rounded-t">
-                    <div className="px-4 flex items-center justify-between">
-                        <span  className="focus:outline-none  text-base font-bold text-gray-800">October 2020</span>
-                        <div className="flex items-center">
-                            <span className="sr-only">Previous month</span>
-                            <button className="focus:text-gray-400 hover:text-gray-400 ml-3 text-gray-800"> 
-                            <SlArrowRight size={16}/>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-between pt-6 overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Mo</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Tu</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">We</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Th</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Fr</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Sa</p>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="w-full flex justify-center">
-                                            <p className="text-base font-medium text-center text-gray-800">Su</p>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className="pt-4">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center"></div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">1</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">2</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">3</p>
-                                        </div>
-                                    </td>
-                                    <td className="pt-6">
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">4</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">5</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">6</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">7</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="w-full h-full">
-                                            <div className="flex items-center justify-center w-full rounded-lg cursor-pointer">
-                                                <a  role="link"  className="focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-sky-700 focus:bg-sky-500 hover:bg-sky-500 text-base w-8 h-8 flex items-center justify-center font-medium text-white bg-sky-700 rounded-full">8</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">9</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">10</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">11</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">12</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">13</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">14</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">15</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">16</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">17</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">18</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">19</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">20</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">21</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">22</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">23</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">24</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500">25</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">26</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">27</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">28</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">29</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="px-2 py-2 cursor-pointer flex w-full justify-center">
-                                            <p className="text-base text-gray-500 font-medium">30</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    
+                <div className="pt-6 pb-2">          
+                <div className="flex gap-1 sm:divide-x justify-center px-3 h-full items-center sm:flex-row flex-col">
+			<div className="w-70 h-70 lg:w-96">
+				<div className="flex justify-between items-center px-2 flex-row ">
+					<div className="select-none font-semibold flex flex-row gap-1.5">
+						<span>{months[today.month() === 11 ? 0 : today.month() + 1]}</span><span>{today.month() === 11 ? today.year() + 1 : today.year()}</span>
+					</div>
+					<div className="flex gap-2 items-center ">
+						<h1
+							className=" cursor-pointer hover:scale-105 transition-all"
+							onClick={() => {
+								setToday(currentDate);
+							}}
+						>
+                            </h1>
+						<SlArrowRight
+							className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:scale-105 transition-all"
+							onClick={() => {
+								setToday(today.month(today.month() + 1));
+							}}
+						/>
+					</div>
+				</div>
+				<div className="grid grid-cols-7 ">
+					{days.map((day, index) => {
+						return (
+							<h1
+								key={index}
+								className="text-sm text-center h-12 w-12 sm:h-10 sm:w-10 grid place-content-center text-gray-500 select-none"
+							>
+								{day}
+							</h1>
+						);
+					})}
+				</div>
+
+				<div className=" grid grid-cols-7 ">
+					{generateDate(today.month() + 1, today.year()).map(
+						({ date, currentMonth, today }, index) => {
+							return (
+								<div
+									key={index}
+									className="p-2 text-center h-12 sm:h-10 sm:p-1.5 grid place-content-center text-sm"
+								>
+									<h1
+										className={`
+											${currentMonth ? "" : "text-gray-400"}
+											${(date
+												.toDate()
+												.toDateString() === currentDate.toDate()
+												.toDateString()) ? "text-gray-500" :
+												(selectDate.toDate().toDateString() === date.toDate().toDateString() || selectReturn.toDate().toDateString() === date.toDate().toDateString() ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' )
+												: "" )	}
+												${(chosenDate === date.format('DD/MM/YYYY')) ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' ) : "" }
+												${(chosenReturnDate === date.format('DD/MM/YYYY')) ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' ) : "" }
+												${isHovered(date) ? (currentMonth ? 'bg-sky-300' : 'bg-white') : ''}
+												${isInRange(date) ? (currentMonth ? 'bg-sky-300' : 'bg-white') : ''}
+												${chosenRange(date) ? (currentMonth ? 'bg-sky-300' : 'bg-white') : ''}
+												${leg === "depart" ? (currentMonth ? 'hover:bg-sky-300' : 'bg-white') : ''}
+											h-10 w-10 sm:h-8 sm:w-8 grid place-content-center transition-all cursor-pointer select-none
+										`}
+										onClick={() => {
+											handleDates(date)
+										}}
+										onMouseEnter={() => handleDateMouseEnter(date)}
+										onMouseLeave={handleDateMouseLeave}
+									>
+										{date.date()}
+									</h1>
+								</div>
+							);
+						}
+					)}
+				</div>
+			</div>
+			
+		</div>
                 </div>
+                
+        
                 
             </div>
 
             </div>
         <div className="flex items-end justify-end w-full p-3 sm:pb-4 sm:pr-6">
-            <h1 className="underline mr-8 hover:text-blue-700">Clear</h1>
-       <button className="hover:bg-blue-900 rounded-lg text-white text-sm bg-blue-700 py-2 px-3">
+            <div className="underline mr-8 hover:text-blue-700 cursor-pointer" onClick={() => handleClear()}>Clear</div>
+       <button type="button" className="hover:bg-blue-900 rounded-lg text-white text-sm bg-blue-700 py-2 px-3" onClick={() => handleDoneClick()}>
         Done
      </button>
      </div>

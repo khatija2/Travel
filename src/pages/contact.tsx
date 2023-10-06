@@ -1,8 +1,66 @@
 import React from 'react'
+import { useState } from "react"
 import Calendar from "~/components/modals/Calendar"
 import {RiArrowDownSLine} from 'react-icons/ri'
+import useOnClickOutside from "~/hooks/closeModal"
 
 const Contact = () => {
+
+    const [showCalendarModal, setShowCalendarModal] = useState(false);
+    const [selectedReturn, setSelectedReturn] = useState<string | null>(null);
+    const [selectedLeg, setSelectedLeg] = useState<string>("depart");
+    const [selectedRound, setSelectedRound] = useState<string>("return");
+    const [selectedDeparture, setSelectedDeparture] = useState<string | null>(null);
+    const [showTypeModal, setShowTypeModal] = useState(false);
+    const [selectedType, setSelectedType] = useState<string | null>(null);
+
+    const types = ['Holiday Packages', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
+  
+    const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+
+    useOnClickOutside(ref, () => closeTypeModal());
+  
+
+     const handleCalendarModal = () => {
+    setShowCalendarModal(true)
+  }
+
+  const closeCalendarModal = () => {
+    setShowCalendarModal(false)
+  }
+
+
+  const handleDepartureSelected: (item: string | null) => void = (item) => {
+    setSelectedDeparture(item);
+  };
+
+  const handleReturnSelected: (item: string | null) => void = (item) => {
+    setSelectedReturn(item);
+  };
+
+  const handleLegSelected: (item: string) => void = (item) => {
+    setSelectedLeg(item);
+  };
+
+  const handleRoundSelected: (item: string) => void = (item) => {
+    setSelectedRound(item);
+  };
+
+  
+  const handleTypeModal = () => {
+    setShowTypeModal(true)
+  }
+
+  const closeTypeModal = () => {
+    setShowTypeModal(false)
+  }
+
+  const handleItemClick = (item: string) => {
+    setSelectedType(item);
+    closeTypeModal()
+  };
+
+
   return (
 <>
 
@@ -36,8 +94,12 @@ const Contact = () => {
     </div>
 <div className="font-md bg-white rounded-lg w-full sm:p-4 lg:p-6 2xl:p-10">
     <h1 className="font-bold my-4 md:my-6  md:mb-8 text-lg lg:text-2xl pl-2">Enquiry Form</h1>
-    <Calendar/>
-    <form>
+    <div className="px-5 sm:p-0">
+    {showCalendarModal && (
+      <Calendar closeCalendarModal={closeCalendarModal} onDepartureSelected={handleDepartureSelected} onReturnSelected={handleReturnSelected} onLegSelected={handleLegSelected}  onRoundSelected={handleRoundSelected} selectedDeparture={selectedDeparture} selectedReturn={selectedReturn} selectedLeg={selectedLeg} selectedRound={selectedRound}/>
+      )}
+      </div>
+    <form  >
     <div className="flex flex-col w-full justify-center items-center px-2 gap-4 sm:grid grid-cols-2">
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Your name</label>
@@ -45,7 +107,7 @@ const Contact = () => {
         </div>
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Phone number</label>
-            <input type="tel" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required/>
+            <input type="tel" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"/>
         </div>
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Email address</label>
@@ -57,32 +119,23 @@ const Contact = () => {
         </div> 
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Travel Dates</label>
-            <div className=" border border-gray-300 text-sm rounded-lg flex justify-between text-gray-900 items-center w-full p-2.5">
-                <div>Anytime</div>
-                <div><RiArrowDownSLine size={18}/></div>
+            <div className=" border border-gray-300 text-sm rounded-lg flex justify-between text-gray-900 items-center w-full p-2.5" onClick={() => handleCalendarModal()}>
+                <div>{(selectedDeparture !== null && selectedReturn === null) ? selectedDeparture : (selectedDeparture !== null && selectedReturn !== null) ? `${selectedDeparture} - ${selectedReturn}` : "Anytime"}</div>
                 <span className="sr-only">Click to open calendar</span>
+       
             </div>
         </div> 
         <div className="w-full">
         <label className="flex mb-2 text-sm font-medium text-gray-900">Travel Category</label>
-        <button  className="rounded-lg text-sm text-gray-900 px-4 py-2.5 flex justify-between items-center border border-gray-300 w-full" type="button">Any Category<RiArrowDownSLine size={18}/></button>
+        <button  className="rounded-lg text-sm text-gray-900 px-4 py-2.5 flex justify-between items-center border border-gray-300 w-full" type="button" onClick={handleTypeModal}>{selectedType !== null ? selectedType : "Any Category"}<RiArrowDownSLine size={18}/></button>
         <span className="sr-only">Dropdown menu</span>
         <div className="z-10 w-full relative">
-            <div className=" bg-white rounded-lg shadow absolute w-full text-gray-900 hidden">
-            <ul className="py-2 text-sm text-gray-700">
-                 <li>
-                     <a href="#" className="block px-4 py-2 hover:bg-gray-100 ">Holiday Packages</a>
-                </li>
-                <li>
-                     <a href="#" className="block px-4 py-2 hover:bg-gray-100 ">Tours</a>
-                </li>
-                <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 ">Cruises</a>
-                 </li>
-                 <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 ">Business</a>
-                </li>
-            </ul>
+            <div className={`bg-white rounded-lg shadow absolute w-full text-gray-900 ${showTypeModal === false ? "hidden" : ""}`} ref={ref}>
+            {types.map((item, index) => ( 
+        <div className="px-3 pb-1 hover:bg-gray-100 cursor-pointer" key={index} onClick={() => handleItemClick(item)}>
+           {item}
+        </div>
+        ))}
             </div>
         </div>
         </div>
