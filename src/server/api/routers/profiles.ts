@@ -16,6 +16,7 @@ export const profilesRouter = createTRPCRouter({
     .query(async ({ ctx, input: {id} }) => {
       const profile = await ctx.prisma.profile.findUnique({
         where: {id},
+        include: {cities: true}
       });
 
 

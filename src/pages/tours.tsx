@@ -13,11 +13,14 @@ import { ssgHelper } from "~/server/api/ssgHelper";
 import {RiArrowDownSLine} from 'react-icons/ri'
 import {SlArrowRight} from 'react-icons/sl'
 import ResultsContainer from "~/components/ResultsContainer";
+import { LoadingPage } from "~/components/Loading";
 
 
 const Tours:NextPage = () => {
 
-  const { data: tours } = api.tours.getByValue.useQuery();
+  const { data: tours, isLoading } = api.tours.getByValue.useQuery();
+
+  if (isLoading) return <LoadingPage/>;
 
   if (!tours) {
       return <ErrorPage statusCode={404} />;;

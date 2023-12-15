@@ -9,26 +9,28 @@ datasource db {
 }
 
 model Profile {
-  createdAt     DateTime   @default(now()) @db.Timestamp
-  title         String     @db.VarChar(100)
-  description   String?    @db.VarChar(450)
-  cities        Cities[]
+  createdAt     DateTime    @default(now())
+  title         String      @db.VarChar(100)
+  description   String?     @db.VarChar(450)
   nights        String
-  accommodation String     @db.VarChar(250)
-  flights       String     @db.VarChar(250)
-  transfers     String     @db.VarChar(250)
-  meals         String     @db.VarChar(250)
-  includes      String[]   @db.VarChar
-  info          String[]   @db.VarChar
-  price_excl    String?    @db.VarChar(8)
+  accommodation String      @db.VarChar(250)
+  flights       String      @db.VarChar(250)
+  transfers     String      @db.VarChar(250)
+  meals         String      @db.VarChar(250)
+  includes      String[]    @db.VarChar
+  info          String[]    @db.VarChar
+  price_excl    String?     @db.VarChar(8)
   image         String
-  id            String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  price_incl    String?    @db.VarChar(8)
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  price_incl    String?     @db.VarChar(8)
   rating        Decimal?
-  trip_index    Trip[]    
-  location      Locations[]
+  trip_index    Trip[]
+  start_date    DateTime?   @db.Date
+  end_date      DateTime?   @db.Date
   deal          Deals?
   itinerary     Itinerary?
+  cities        Cities[]    @relation("CitiesToProfile")
+  location      Locations[] @relation("LocationsToProfile")
 }
 
 model Itinerary {
@@ -70,22 +72,22 @@ model Destinations {
   image       String @default("")
 }
 
+model Locations {
+  id       Int       @id @default(autoincrement())
+  location String
+  profile  Profile[] @relation("LocationsToProfile")
+}
+
+model Cities {
+  id      Int       @id @default(autoincrement())
+  city    String
+  profile Profile[] @relation("CitiesToProfile")
+}
+
 enum Trip {
   HOLIDAYS
   CRUISES
   TOURS
   RESORTS
   FLIGHTS
-}
-
-model Locations {
-  id          Int   @id @default(autoincrement())
-  location    String
-  profile     Profile[]
-}
-
-model Cities {
-  id          Int   @id @default(autoincrement())
-  city    String
-  profile     Profile[]
 }

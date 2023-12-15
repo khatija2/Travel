@@ -13,12 +13,15 @@ import {RiArrowDownSLine} from 'react-icons/ri'
 import {SlArrowRight} from 'react-icons/sl'
 import PageSearch from "~/components/search-bars/PageSearch";
 import ResultsContainer from "~/components/ResultsContainer";
+import { LoadingPage } from "~/components/Loading";
 
 
 
 const popularDestination: NextPage<{place: string}> = ({place}) => {
 
-  const { data: popular } = api.popular.getByValue.useQuery({place});
+  const { data: popular, isLoading } = api.popular.getByValue.useQuery({place});
+
+  if (isLoading) return <LoadingPage/>;
 
   if (popular?.length === 0) {
       return <ErrorPage statusCode={404} />;

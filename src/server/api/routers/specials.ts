@@ -4,6 +4,7 @@ import {
     createTRPCRouter,
     publicProcedure,
   } from "~/server/api/trpc";
+  import { TRPCError } from "@trpc/server";
   
   
   
@@ -29,7 +30,7 @@ import {
         take: 15
       });
   
-        if (!specials) return;
+        if (!specials) throw new TRPCError({ code: "NOT_FOUND" })
         return specials
      
     

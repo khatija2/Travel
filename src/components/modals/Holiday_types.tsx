@@ -13,7 +13,7 @@ type TypeProps = {
 const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected, landing}) => {
 
 
-  const types = ['Holiday Packages', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
+  const types = ['Holidays', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
 
   const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 

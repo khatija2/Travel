@@ -174,7 +174,6 @@ const handleDoneClick = () => {
 	onLegSelected("depart")
 	closeCalendarModal()
 	}
-
   };
 
   return (

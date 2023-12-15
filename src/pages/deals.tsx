@@ -17,13 +17,16 @@ import ButtonNext from "~/components/buttons/ButtonNext";
 import ButtonPrev from "~/components/buttons/ButtonPrev";
 import Sort from "~/components/search-bars/Sort";
 import ResultsContainer from "~/components/ResultsContainer";
+import { LoadingPage } from "~/components/Loading";
 
 
 
 
 const Deals: NextPage = () => {
 
-  const { data: deals } = api.deals.getAll.useQuery();
+  const { data: deals, isLoading } = api.deals.getAll.useQuery();
+
+  if (isLoading) return <LoadingPage/>;
 
   if (!deals) {
       return <ErrorPage statusCode={404} />;;

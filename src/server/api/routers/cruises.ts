@@ -2,6 +2,7 @@ import {
     createTRPCRouter,
     publicProcedure,
   } from "~/server/api/trpc";
+  import { TRPCError } from "@trpc/server";
   
   
   
@@ -28,7 +29,7 @@ import {
          },
       });
   
-        if (!cruises) return;
+        if (!cruises) throw new TRPCError({ code: "NOT_FOUND" })
         return cruises
      
     

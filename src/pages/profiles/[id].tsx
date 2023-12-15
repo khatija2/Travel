@@ -19,11 +19,15 @@ import Itinerary from "~/components/profile/Itinerary"
 import { api } from "../../utils/api";
 import { ssgHelper } from "~/server/api/ssgHelper";
 import { string } from "zod";
+import { LoadingPage } from "~/components/Loading";
 
 
 const Profile: NextPage<{ id: string }> = ({id}) => {
 
-    const { data: profile } = api.profiles.getById.useQuery({ id });
+    const { data: profile, isLoading } = api.profiles.getById.useQuery({ id });
+
+
+    if (isLoading) return <LoadingPage/>;
 
     if (!profile) {
         return <ErrorPage statusCode={404} />;
@@ -51,8 +55,8 @@ const Profile: NextPage<{ id: string }> = ({id}) => {
                                 <div className="flex flex-row items-center gap-1"><MdHotel/><p>{profile.nights}</p></div>
                                 <div className="flex flex-row">
                                     <ul className="flex flex-row list-disc list-inside sm:gap-2 gap-1 flex-wrap ">
-                                        {profile.cities.map((city) =>
-                                        <li>{city}</li>)}
+                                    {profile.cities.map((city) =>
+                                        <li key={city.city}>{city.city}</li>)}
                                     </ul>
                                 </div>
                             </div>

@@ -11,6 +11,7 @@ import ErrorPage from "next/error";
 import { api } from "~/utils/api";
 import { ssgHelper } from "~/server/api/ssgHelper";
 import { never } from "zod";
+import { LoadingPage } from "../Loading";
 
 
 type destinationProps = {
@@ -44,15 +45,15 @@ handleSearch()
 
 
 
- const { data: results } =  api.places.getValue.useQuery({searchValue}, {enabled: searchValue.length >= 2});
+ const { data: results, isLoading } =  api.places.getValue.useQuery({searchValue}, {enabled: searchValue.length >= 2});
 
-
+ 
   const handleSearch = () => {
+
+    if (isLoading) return <LoadingPage/>;
     
        if (results) {
         setSearchResults(results)
-        console.log(results)
-    
        }
      
   };

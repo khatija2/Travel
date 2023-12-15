@@ -13,11 +13,14 @@ import { ssgHelper } from "~/server/api/ssgHelper";
 import {RiArrowDownSLine} from 'react-icons/ri'
 import {SlArrowRight} from 'react-icons/sl'
 import ResultsContainer from "~/components/ResultsContainer";
+import { LoadingPage } from "~/components/Loading";
 
 
 const Cruises:NextPage = () => {
 
-  const { data: cruises } = api.cruises.getByValue.useQuery();
+  const { data: cruises, isLoading } = api.cruises.getByValue.useQuery();
+
+  if (isLoading) return <LoadingPage/>;
 
   if (!cruises) {
       return <ErrorPage statusCode={404} />;;

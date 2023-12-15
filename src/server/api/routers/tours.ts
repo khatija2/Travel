@@ -2,7 +2,7 @@ import {
     createTRPCRouter,
     publicProcedure,
   } from "~/server/api/trpc";
-  
+  import { TRPCError } from "@trpc/server";
   
   
   export const toursRouter = createTRPCRouter({
@@ -28,7 +28,7 @@ import {
          },
       });
   
-        if (!tours) return;
+        if (!tours) throw new TRPCError({ code: "NOT_FOUND" })
         return tours
      
     

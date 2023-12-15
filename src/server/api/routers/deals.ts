@@ -31,7 +31,7 @@ export const dealsRouter = createTRPCRouter({
        },}}
     });
 
-      if (!deals) return;
+      if (!deals) throw new TRPCError({ code: "NOT_FOUND" })
       return deals
    
   

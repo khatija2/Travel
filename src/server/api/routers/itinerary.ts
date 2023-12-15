@@ -1,10 +1,10 @@
 import { z } from "zod";
-
 import {
   createTRPCRouter,
   publicProcedure,
 
 } from "~/server/api/trpc";
+import { TRPCError } from "@trpc/server";
 
 export const itineraryRouter = createTRPCRouter({
 
@@ -18,7 +18,7 @@ export const itineraryRouter = createTRPCRouter({
             include: {hotel: true}
         }}
       });
-      if (!itinerary) return;
+      if (!itinerary) throw new TRPCError({ code: "NOT_FOUND" })
 
       return itinerary
    

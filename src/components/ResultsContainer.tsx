@@ -10,7 +10,7 @@ type resultsProps = {
 info: {
   title: string;
   image: string;
-  cities: string[];
+  cities: any;
   nights: string;
   price_excl: string | null;
   price_incl: string | null;
@@ -86,6 +86,7 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
           price_incl ={card.price_incl}
           id ={card.id}
           rating ={card.rating}
+          key={card.id}
           />
         );
       }

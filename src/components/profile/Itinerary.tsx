@@ -3,12 +3,14 @@ import {GrLocationPin} from 'react-icons/gr'
 import {IoMdStar} from 'react-icons/io'
 import {MdNightlight} from 'react-icons/md'
 import type {NextPage} from "next";
-import { api } from "../../utils/api";
-
+import { LoadingPage } from "../Loading";
+import { api } from "~/utils/api";
 
 const Itinerary: NextPage<{ profileId: string}> = ({profileId}) => {
 
-    const { data: itinerary } = api.itinerary.getbyProfileId.useQuery({ profileId });
+    const { data: itinerary, isLoading } = api.itinerary.getbyProfileId.useQuery({ profileId });
+
+    if (isLoading) return <LoadingPage/>;
 
     if (!itinerary) {
         return <div></div>;;

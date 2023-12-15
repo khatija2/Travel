@@ -22,7 +22,7 @@ export const destinationsRouter = createTRPCRouter({
     
       });
   
-        if (!destinations) return;
+        if (!destinations) throw new TRPCError({ code: "NOT_FOUND" })
         return destinations
      
     

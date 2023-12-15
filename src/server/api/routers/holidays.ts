@@ -2,6 +2,7 @@ import {
     createTRPCRouter,
     publicProcedure,
   } from "~/server/api/trpc";
+  import { TRPCError } from "@trpc/server";
 
   
   export const holidaysRouter = createTRPCRouter({
@@ -27,7 +28,7 @@ import {
          },
       });
   
-        if (!holidays) return;
+        if (!holidays) throw new TRPCError({ code: "NOT_FOUND" })
         return holidays
      
     

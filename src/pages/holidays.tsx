@@ -9,11 +9,14 @@ import { api } from "~/utils/api";
 import { ssgHelper } from "~/server/api/ssgHelper";
 import PageSearch from "~/components/search-bars/PageSearch";
 import ResultsContainer from "~/components/ResultsContainer";
+import { LoadingPage } from "~/components/Loading";
 
 
 const Holidays: NextPage = () => {
 
-  const { data: holidays } = api.holidays.getByValue.useQuery();
+  const { data: holidays, isLoading } = api.holidays.getByValue.useQuery();
+
+  if (isLoading) return <LoadingPage/>;
 
   if (!holidays) {
       return <ErrorPage statusCode={404} />;;
