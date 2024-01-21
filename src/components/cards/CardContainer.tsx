@@ -11,7 +11,7 @@ import { Decimal } from "@prisma/client/runtime/library"
 
 type cardProps = {
         title: string;
-        cities: string[];
+        cities: any;
         nights: string;
         price_excl: number | null;
         price_incl: number | null;
