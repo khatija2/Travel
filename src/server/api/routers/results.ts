@@ -73,7 +73,7 @@ const tripEnum = selectedType ? stringToTripEnum(selectedType.toUpperCase()) : u
 
 const [budgetLower, budgetUpper] = selectedBudget? convertBudgetRange(selectedBudget) : "null";
 
-const filters = []
+const filters: any = []
 
 if (selectedDestination && (selectedDestination !== "null")) {
   filters.push(  

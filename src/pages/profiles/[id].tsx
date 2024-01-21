@@ -21,10 +21,27 @@ import { ssgHelper } from "~/server/api/ssgHelper";
 import { LoadingPage } from "~/components/Loading";
 
 
-const Profile: NextPage<{ id: string }> = ({id}) => {
+type profileProps = {
+    cities: {
+        id: number;
+        city: string;
+    }[];
+} & {
+    createdAt: Date;
+    title: string;
+    description: string | null;
+    nights: string;
+    accommodation: string;
+    flights: string;
+    transfers: string;
+    meals: string;
+    id: string
+}
+
+const Profile: NextPage<profileProps> = ({id}) => {
 
     const { data: profile, isLoading } = api.profiles.getById.useQuery({ id });
-
+console.log(typeof profile)
 
     if (isLoading) return <LoadingPage/>;
 

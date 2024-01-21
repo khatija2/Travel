@@ -6,17 +6,21 @@ import ButtonPrev from "./buttons/ButtonPrev";
 import Sort from "./search-bars/Sort";
 
 type resultsProps = {
-info: {
+
+  info: {
+    cities: {
+      id: number;
+      city: string;
+  }[];
+  createdAt: Date;
   title: string;
-  image: string;
-  cities:  any;
   nights: string;
-  price_excl: number | null;
-  price_incl: number | null;
+  image: string;
   id: string;
   rating: Decimal | null;
-  createdAt: Date
-}[] 
+  price_excl: number | null;
+  price_incl: number | null
+}[]
 }
 
 

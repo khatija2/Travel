@@ -10,7 +10,7 @@ import ResultsContainer from "~/components/ResultsContainer";
 import { LoadingPage } from "~/components/Loading";
 import dayjs from "dayjs";
 
-type results = {
+type resultsProps = {
   selectedDestination: string|null,
   selectedBudget:string|null,
   selectedType:string|null,
@@ -20,7 +20,7 @@ type results = {
 
 }
 
-const Results:NextPage<results> = () => {
+const Results:NextPage<resultsProps> = () => {
 
 const search = useSearchParams()
   
@@ -50,8 +50,6 @@ const page = landing === 'landing' ? null : landing
  if (!result) {
       return <ErrorPage statusCode={404} />;;
     }
-
-console.log(result)
 
 
   return (
