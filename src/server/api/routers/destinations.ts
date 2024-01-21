@@ -1,10 +1,7 @@
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-
 import {
   createTRPCRouter,
   publicProcedure,
-
 } from "~/server/api/trpc";
 
 export const destinationsRouter = createTRPCRouter({
@@ -15,7 +12,7 @@ export const destinationsRouter = createTRPCRouter({
      const destinations = await ctx.prisma.destinations.findMany({
         where: {
             destination: {
-                in: ['Mauritius', 'Australia', 'Ireland', 'Spain', 'Cape Town', 'Turkey'],
+                in: ['Italy', 'Australia', 'Ireland', 'Spain', 'Cape Town', 'Turkey'],
               }, 
             },
         take: 6,

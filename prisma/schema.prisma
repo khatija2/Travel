@@ -19,14 +19,14 @@ model Profile {
   meals         String      @db.VarChar(250)
   includes      String[]    @db.VarChar
   info          String[]    @db.VarChar
-  price_excl    String?     @db.VarChar(8)
   image         String
   id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  price_incl    String?     @db.VarChar(8)
   rating        Decimal?
   trip_index    Trip[]
   start_date    DateTime?   @db.Date
   end_date      DateTime?   @db.Date
+  price_excl    Int?
+  price_incl    Int?
   deal          Deals?
   itinerary     Itinerary?
   cities        Cities[]    @relation("CitiesToProfile")
@@ -82,6 +82,12 @@ model Cities {
   id      Int       @id @default(autoincrement())
   city    String
   profile Profile[] @relation("CitiesToProfile")
+}
+
+model Contacts {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  email      String?  @db.VarChar
 }
 
 enum Trip {

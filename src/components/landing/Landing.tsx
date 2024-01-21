@@ -1,29 +1,21 @@
-
-import React, {useState, useEffect} from 'react'
+'use client'
+import React from 'react'
 import type {
   NextPage,
-  GetStaticPaths,
-  GetStaticPropsContext,
 } from "next";
-
 import Image from 'next/image'
-import Search from "./Search"
 import Popular from "./Popular"
 import Specials from "./Specials"
 import Newsletter from "./Newsletter"
-import {BsChatRightDots} from "react-icons/bs"
 import {AiOutlineCheck} from 'react-icons/ai'
 import PageSearch from "../search-bars/PageSearch"
-import ErrorPage from "next/error";
-import { api } from "~/utils/api";
-import { ssgHelper } from "~/server/api/ssgHelper";
 
 
 const Landing: NextPage = () => {
   return (
    <div className="font-figtree">
     <div className=" bg-mauritiusBanner z-0 flex flex-col items-center justify-center bg-cover bg-center h-full w-full sm:h-1/2">
-      <PageSearch category="Destination" category2="Travel category" landing={true} />
+      <PageSearch category="Destination" category2="Travel category" landing={"landing"} />
       <Specials/>
     </div>
     <Popular/>  
@@ -47,8 +39,6 @@ const Landing: NextPage = () => {
    </div>
   )
 }
-
-
 
 
 export default Landing

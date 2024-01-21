@@ -1,24 +1,35 @@
-import { boolean, z } from "zod";
+import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { Trip } from "@prisma/client";
 import {
   createTRPCRouter,
   publicProcedure,
 } from "~/server/api/trpc";
-import dayjs from "dayjs";
-import { Prisma } from "@prisma/client";
-
 
 
 const convertBudgetRange = (range: string): [number, number] => {
-  const [lower, upper] = range
-  .split('-')
-  .map(value => parseInt(value.replace(/[^\d]/g, ''), 10))
-  .map((value: any) => (isNaN(value) ? 0 : value))
+  const sanitizedRange = range.replace(/[^\w\s-]/g, ''); // Remove non-alphanumeric characters
+  const [direction, value] = sanitizedRange.split(/(?<=R)/);
+  let upper: number;
+  let lower: number;
+
+  if (direction?.toLowerCase() === 'less than r') {
+    lower = 0;
+    upper = parseInt((value || '').replace(/[^\d]/g, ''), 10) || 0;
+  } else if (direction?.toLowerCase() === 'greater than' || direction?.toLowerCase() === 'none') {
+    lower = parseInt((value || '').replace(/[^\d]/g, ''), 10) || 0;
+    upper = Number.POSITIVE_INFINITY;
+  } else if (value && value.includes('-')) {
+    const [lowerStr = '', upperStr = ''] = value.split('-').map(v => v.replace(/[^\d]/g, ''));
+    lower = parseInt(lowerStr, 10) || 0;
+    upper = parseInt(upperStr, 10) || 0;
+  } else {
+    lower = parseInt((value || '').replace(/[^\d]/g, ''), 10) || 0;
+    upper = lower;
+  }
+
   return [lower, upper];
 };
-
-
 
 
 export const resultsRouter = createTRPCRouter({
@@ -29,7 +40,9 @@ export const resultsRouter = createTRPCRouter({
     selectedBudget: z.string().nullable().optional(), 
     selectedType: z.string().nullable().optional(), 
     departDate: z.date().nullable().optional(),
-    returnDate: z.date().nullable().optional(), }))
+    returnDate: z.date().nullable().optional(),
+    page: z.string().nullable().optional(),
+ }))
   .query(async ({ ctx, input}) => {
 
     const {
@@ -38,8 +51,8 @@ export const resultsRouter = createTRPCRouter({
       selectedType,
       departDate,
       returnDate,
+      page,
     } = input;
-
 
     const stringToTripEnum = (input: string): Trip | undefined => {
       switch (input) {
@@ -54,39 +67,51 @@ export const resultsRouter = createTRPCRouter({
       }
     };
 
-    const tripEnum = selectedType ? stringToTripEnum(selectedType.toUpperCase()) : undefined;
 
-    console.log(tripEnum)
 
-    const [budgetLower, budgetUpper] = selectedBudget? convertBudgetRange(selectedBudget) : "";
+const tripEnum = selectedType ? stringToTripEnum(selectedType.toUpperCase()) : undefined;
 
-    const destination = (selectedDestination !== null) ? selectedDestination?.toLowerCase() : undefined
+const [budgetLower, budgetUpper] = selectedBudget? convertBudgetRange(selectedBudget) : "null";
 
 const filters = []
 
-if (destination !== undefined) {
+if (selectedDestination && (selectedDestination !== "null")) {
   filters.push(  
-    {  OR:    [
-      { cities: { some: { city: destination} }  },
-      { location: { some: { location: destination} }  },
-    ],
+    {
+    OR: [
+      { cities: { some: { city:  selectedDestination?.toLowerCase()}}   },
+      { location: { some: { location: selectedDestination?.toLowerCase()} }  }
+        ]  
+    }
+  )
+} 
+
+if ( page !== null && page !== "deals" ) {
+  filters.push( { trip_index: {has: page}
   })
 }
 
-if (selectedBudget && (budgetLower !== undefined && budgetUpper !== undefined)) {
-  filters.push( {
+if ( page === "deals" ) {
+  filters.push( {deal: { isNot: null }
+  })
+}
+
+
+if (selectedBudget !== "null" && (budgetUpper !== 0 || budgetUpper !== Infinity)) {
+  filters.push({
     OR: [
-      {   AND: [
-        { price_incl: { gte: budgetLower.toString() } },
-        { price_incl: { lte: budgetUpper.toString() } },
-      ], },
-      {   AND: [
-        { price_excl: { gte: budgetLower.toString() } },
-        { price_excl: { lte: budgetUpper.toString() } },
-      ],},
-    ],
+      {AND: [
+      { price_incl:  { gte: budgetLower } },
+      { price_incl: { lte: budgetUpper} },
+      ]},
+      {AND: [
+      { price_excl:  { gte: budgetLower} },
+      { price_excl: { lte: budgetUpper } },
+      ]}
+        ]    
     })
 }
+
 
 if ( tripEnum !== undefined ) {
   filters.push( { trip_index: {has: tripEnum }
@@ -104,7 +129,7 @@ if  ( departDate !== null) {
 
      const results = await ctx.prisma.profile.findMany({
         where: {
-          AND: filters,
+          AND: filters
         },
         select: {
             rating: true,
@@ -123,7 +148,7 @@ if  ( departDate !== null) {
         if (!results) throw new TRPCError({ code: "NOT_FOUND" })
         return results
      
-    
+
   
       }),
   

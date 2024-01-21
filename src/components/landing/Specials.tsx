@@ -1,25 +1,15 @@
 'use client'
 
 import React, {useState, useEffect} from 'react'
-import Image from 'next/image'
-import {SlArrowLeft} from 'react-icons/sl'
-import {SlArrowRight} from 'react-icons/sl'
-import type {
-  NextPage,
-  GetStaticPaths,
-  GetStaticPropsContext,
-} from "next";
+import type { NextPage} from "next";
 import ErrorPage from "next/error"
 import { api } from "~/utils/api";
-import { ssgHelper } from "~/server/api/ssgHelper";
 import CardContainer from "../cards/CardContainer"
 import ButtonPrev from "../buttons/ButtonPrev"
 import ButtonNext from "../buttons/ButtonNext"
 
 
-
 const Specials: NextPage = () => {
-
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideSize, setSlideSize] = useState(3);
@@ -47,9 +37,6 @@ const Specials: NextPage = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-
-
 
 
   const { data: specials } = api.specials.getSome.useQuery();
@@ -95,18 +82,7 @@ const Specials: NextPage = () => {
     }
 
     return cards;
-  };
-
-
-    
- 
-      
-      
-    
-    
-
-      
-    
+  }
 
 
   return (
@@ -127,15 +103,9 @@ const Specials: NextPage = () => {
      </div>
     </div>
   </div>
-);
-
-           
+)         
 
 }
-
-
-
-
 
 
 

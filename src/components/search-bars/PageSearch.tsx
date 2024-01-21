@@ -1,5 +1,6 @@
+'use client'
 import React from 'react'
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { useRouter } from 'next/navigation';
 import Destination from "../modals/Destination"
 import Holiday_types from "../modals/Holiday_types"
@@ -15,8 +16,7 @@ import toast from "react-hot-toast"
 type searchTypes = {
   category: string,
   category2: string,
-  landing: boolean
-
+  landing: string
 }
 
 
@@ -97,28 +97,27 @@ const PageSearch: React.FC<searchTypes> = ({category, category2, landing }) => {
     setSelectedRound(item);
   };
 
-  const handleSearch = (e:any, selectedDestination: string|null, selectedBudget:string|null, selectedType:string|null, selectedDeparture:string|null, selectedReturn:string|null) => {
+  const handleSearch = (e:any, selectedDestination: string|null, selectedBudget:string|null, selectedType:string|null, selectedDeparture:string|null, selectedReturn:string|null, landing: string|null) => {
     e.preventDefault()
     if (selectedDestination === null && (selectedBudget === null && selectedType === null ) && selectedDeparture === null) {
       toast.error("Please select search criteria")
     }
     else {
-    
-      router.push(`/search/searchresults?selectedDestination=${selectedDestination}&selectedBudget=${selectedBudget}&selectedType=${selectedType}&selectedDeparture=${selectedDeparture}&selectedReturn=${selectedReturn}`)
+      router.push(`/search/searchresults?landing=${landing}&selectedDestination=${selectedDestination}&selectedBudget=${selectedBudget}&selectedType=${selectedType}&selectedDeparture=${selectedDeparture}&selectedReturn=${selectedReturn}`)
     }
 
   }
 
   return (
     <>
-    <div className={`flex flex-col sm:flex-row sm:items-center justify-center h-52 sm:h-40 mb-4 w-4/5 z-10 px-4 gap-2 my-4 ${(landing === true) ? "py-2 lg:py-8 bg-white rounded-xl  border border-gray-200 shadow" : " bg-transparent " }`}>
+    <div className={`flex flex-col sm:flex-row sm:items-center justify-center h-52 sm:h-40 mb-4 w-4/5 z-10 px-4 gap-2 my-4 ${(landing === "landing") ? "py-2 lg:py-8 bg-white rounded-xl  border border-gray-200 shadow" : " bg-transparent " }`}>
       <button onClick={() => handleDestinationModal()} type="button" className={`z-30 rounded-md h-10 sm:h-14 w-8/10 sm:w-120  sm:flex-1 border border-gray-400 p-4 ${(selectedDestination !== null) ? `text-black font-semibold` : `text-slate-400`} cursor-text flex items-center justify-start gap-1 lg:text-lg bg-white`}><MdOutlinePlace size={20}/>{(selectedDestination !== null) ? selectedDestination : category}</button>
       {showDestinationModal && (
-      <Destination closeDestinationModal={closeDestinationModal} onDestinationSelected={handleDestinationSelected} landing={landing}/>
+      <Destination closeDestinationModal={closeDestinationModal} onDestinationSelected={handleDestinationSelected} landing={"landing"}/>
       )}
       <button onClick={(category2 === "Travel category") ? () => handleTypeModal() : () => handleBudgetModal()} type="button"  className={`z-30 rounded-md h-10 sm:h-14 w-8/10 sm:w-160  sm:flex-1 border border-gray-400  p-4 ${(selectedType || selectedBudget !== null) ? `text-black font-semibold` :  `text-slate-400` } cursor-auto flex items-center justify-between lg:text-lg bg-white`}><div className="flex items-center gap-1 ">{(category2 === "Travel category") ? <MdTravelExplore size={20}/> : ((category2 === "Budget") ? <FaMoneyCheckAlt size={20}/> : "" ) }<p>{(selectedType || selectedBudget !== null) ? selectedType || selectedBudget : category2}</p></div><RiArrowDownSLine size={22}/></button>
       {showTypeModal && ( <>{category2 === "Travel category" && (
-      <Holiday_types closeTypeModal={closeTypeModal} onTypeSelected={handleTypeSelected} landing={landing} />
+      <Holiday_types closeTypeModal={closeTypeModal} onTypeSelected={handleTypeSelected} landing={"landing"} />
       )}</>)}
         {showBudgetModal && ( <>{category2 === "Budget" && (
       <Budget closeBudgetModal={closeBudgetModal} onBudgetSelected={handleBudgetSelected} />
@@ -127,7 +126,7 @@ const PageSearch: React.FC<searchTypes> = ({category, category2, landing }) => {
       {showCalendarModal && (
       <Calendar closeCalendarModal={closeCalendarModal} onDepartureSelected={handleDepartureSelected} onReturnSelected={handleReturnSelected} onLegSelected={handleLegSelected}  onRoundSelected={handleRoundSelected} selectedDeparture={selectedDeparture} selectedReturn={selectedReturn} selectedLeg={selectedLeg} selectedRound={selectedRound}/>
       )}
-      <button type="button" className="bg-blue-700 hover:bg-blue-800 text-white self-center w-1/3 sm:w-24 z-30 rounded-md h-10 sm:h-14" onClick={(e) => handleSearch(e, selectedDestination, selectedBudget, selectedType, selectedDeparture, selectedReturn)}>Search</button>
+      <button type="button" className="bg-blue-700 hover:bg-blue-800 text-white self-center w-1/3 sm:w-24 z-30 rounded-md h-10 sm:h-14" onClick={(e) => handleSearch(e, selectedDestination, selectedBudget, selectedType, selectedDeparture, selectedReturn, landing)}>Search</button>
       </div>
     </>
   )

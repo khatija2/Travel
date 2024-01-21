@@ -20,7 +20,7 @@ export default function Navbar() {
 <div className="font-nunito">
   <nav className="bg-white">
   <div className="flex flex-wrap items-center justify-between mx-auto py-4 px-6">
-      <Link href="" className="flex items-center">
+      <Link href="/" className="flex items-center">
         <Image src="" className="h-8 mr-3" alt="Logo"/>
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-sky-900">
           Travel

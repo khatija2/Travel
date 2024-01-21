@@ -1,28 +1,17 @@
-import React, {useState, useEffect} from 'react'
-import type {
-    NextPage,
-    GetStaticPaths,
-    GetStaticPropsContext,
-  } from "next";
+import React, {useState} from 'react'
+import type { NextPage} from "next";
 import Link from 'next/link'
 import Image from 'next/image'
 import { api } from "../../utils/api";
-import { ssgHelper } from "~/server/api/ssgHelper";
 import ErrorPage from "next/error";
-import {SlArrowLeft} from 'react-icons/sl'
-import {SlArrowRight} from 'react-icons/sl'
 import ButtonPrev from "../buttons/ButtonPrev";
 import ButtonNext from "../buttons/ButtonNext";
 
 const Popular: NextPage = () => {
 
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-
-  
-  
-    const { data: destinations } = api.destinations.getByValue.useQuery();
+  const { data: destinations } = api.destinations.getByValue.useQuery();
 
     if (!destinations) {
         return <ErrorPage statusCode={404} />;
@@ -64,9 +53,6 @@ const Popular: NextPage = () => {
       return cards;
     };
   
-
-
-   
 
 
   return (

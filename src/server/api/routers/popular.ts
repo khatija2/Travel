@@ -6,21 +6,19 @@ import {
   import { TRPCError } from "@trpc/server";
 
 
-
   export const popularRouter = createTRPCRouter({
   
-
   
     getByValue: publicProcedure
     .input(z.object({ place: z.string() }))
     .query(async ({ ctx, input: {place} }) => {
      const popular = await ctx.prisma.profile.findMany({
-      include: { where: {
+       where: {
         OR: [
-            { location: { hasSome: place } },
-            { cities: { hasSome: place } },
+            { location: { some: {location: place.toLowerCase()} } },
+            { cities: { some: {city: place.toLowerCase()} } },
           ],
-      },},
+      },
         select: {
             rating: true,
             title: true,

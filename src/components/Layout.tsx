@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import {BsChatRightDots} from "react-icons/bs"
+import ChatButton from "./buttons/ChatButton";
 
 import { Inter, Figtree, Nunito } from 'next/font/google';
  
@@ -31,7 +31,7 @@ export default function PageLayout({
     return (
       <main className={`${inter.variable} ${figtree.variable} ${nunito.variable}`}>
         <Navbar/>
-        <div className="z-50 fixed bottom-2 sm:bottom-4 right-2 sm:right-4"><button className="bg-indigo-900 border border-gray-50 p-2 text-xs sm:text-lg flex flex-row items-center justify-center gap-1 shadow-lg text-white rounded-lg hover:opacity-50"><BsChatRightDots/>Let's Chat</button></div>
+        <ChatButton/>
         <div>{children}</div>
         <Footer/>
       </main>

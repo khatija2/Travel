@@ -1,30 +1,17 @@
+'use client'
 import React, { useState, useEffect } from 'react'
-import {SlArrowUp} from 'react-icons/sl'
 import useOnClickOutside from "~/hooks/closeModal";
-import type {
-  NextPage,
-  GetStaticPaths,
-  GetStaticPropsContext,
-} from "next";
-import Link from "next/link";
-import ErrorPage from "next/error";
+import type { NextPage} from "next";
 import { api } from "~/utils/api";
-import { ssgHelper } from "~/server/api/ssgHelper";
-import { never } from "zod";
 import { LoadingPage } from "../Loading";
 
 
 type destinationProps = {
   closeDestinationModal: () => void
   onDestinationSelected: (item: string) => void;
-  landing: boolean
+  landing: string
 }
 
-type PlacesData = {
-  cities: string[];
-  situated: string[];
-
-}
 
 const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDestinationSelected, landing}) => {
 
@@ -107,7 +94,7 @@ handleSearch()
 
   <>
   <div>
-  <div className={`absolute z-50 w-3/4 sm:left-20 sm:translate-y-24 2xl:translate-x-24 ${(landing === true) ? "top-32 -translate-y-9.5 left-12 sm::left-38 sm:top-16" : "left-30 -translate-x-1.5 top-40 translate-y-4 "}`}>
+  <div className={`absolute z-50 w-3/4 sm:left-20 sm:translate-y-24 2xl:translate-x-24 ${(landing === "landing") ? "top-32 -translate-y-9.5 left-12 sm::left-38 sm:top-16" : "left-30 -translate-x-1.5 top-40 translate-y-4 "}`}>
     <div ref={ref} className="relative w-full sm:w-3/4 lg:w-2/5 bg-white rounded-lg shadow-lg ">
       <div className="flex items-center justify-center py-4 border-b">
        <input placeholder="All Destinations" type="search"  className="rounded-md h-10 sm:h-14 w-full sm:w-3/4 lg:w-5/8 2xl:w-3/5 mx-3 p-2 sm:w-120 border border-black placeholder-text-slate-400 cursor-text" value={searchValue}

@@ -1,30 +1,23 @@
 import React from 'react'
 import Image from "next/image"
 import Link from "next/link"
-import {RiArrowDownSLine} from 'react-icons/ri'
-import {SlArrowRight} from 'react-icons/sl'
 import {IoMdStar} from 'react-icons/io'
 import {IoMdStarHalf} from 'react-icons/io'
 import {IoMdStarOutline} from 'react-icons/io'
 import {MdNightlight} from 'react-icons/md'
 import {SlLocationPin} from 'react-icons/sl'
-import type {NextPage} from "next";
-import ErrorPage from "next/error";
-import { api } from "~/utils/api";
-import { Decimal } from "@prisma/client/runtime"
+import { Decimal } from "@prisma/client/runtime/library"
 
 
 type cardProps = {
         title: string;
         cities: string[];
         nights: string;
-        price_excl: string | null;
-        price_incl: string | null;
+        price_excl: number | null;
+        price_incl: number | null;
         image: string;
         id: string;
         rating: Decimal | null;
-  
-      
 }
 
 
@@ -52,8 +45,8 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
                 <div className="flex flex-row items-center gap-1"><MdNightlight/><p>{nights}</p></div>
                 <div className={(cities?.length !== 0 ) ? `flex flex-row items-center gap-1` : `flex flex-row items-center gap-1 opacity-0`}><SlLocationPin/><p>{cities?.length} cities</p></div>
             </div>
-            <div className={(price_excl || price_incl) ? `flex flex-row justify-between items-end` : `flex flex-row justify-between items-end opacity-0`} >
-                    <div>
+            <div className="flex flex-row justify-between items-end" >
+                    <div className={(price_excl || price_incl) ? `opacity-100` : `opacity-0`}>
                         <p>From</p>
                     <h1 className="font-bold lg:text-2xl">R {price_excl || price_incl}</h1>
                     </div>

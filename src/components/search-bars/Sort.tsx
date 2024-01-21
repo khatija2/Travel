@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import span from "next/link"
 import useOnClickOutside from "~/hooks/closeModal"
 import {RiArrowDownSLine} from 'react-icons/ri'
 

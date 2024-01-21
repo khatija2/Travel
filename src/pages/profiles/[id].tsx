@@ -18,7 +18,6 @@ import PriceSmall from "~/components/profile/PriceSmall"
 import Itinerary from "~/components/profile/Itinerary"
 import { api } from "../../utils/api";
 import { ssgHelper } from "~/server/api/ssgHelper";
-import { string } from "zod";
 import { LoadingPage } from "~/components/Loading";
 
 

@@ -382,9 +382,6 @@ const handleDoneClick = () => {
      </div>
         </div>
 
-
-
-   
     </div>
   )
 }

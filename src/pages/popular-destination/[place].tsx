@@ -1,17 +1,12 @@
 import React from 'react'
-import CardContainer from "~/components/cards/CardContainer"
 import type {
   NextPage,
   GetStaticPaths,
   GetStaticPropsContext,
 } from "next";
-import Link from "next/link";
 import ErrorPage from "next/error";
 import { api } from "~/utils/api";
 import { ssgHelper } from "~/server/api/ssgHelper";
-import {RiArrowDownSLine} from 'react-icons/ri'
-import {SlArrowRight} from 'react-icons/sl'
-import PageSearch from "~/components/search-bars/PageSearch";
 import ResultsContainer from "~/components/ResultsContainer";
 import { LoadingPage } from "~/components/Loading";
 

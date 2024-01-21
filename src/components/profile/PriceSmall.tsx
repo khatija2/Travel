@@ -1,8 +1,8 @@
 import React from 'react'
 
 type priceProps = {
-    price_excl: string | null
-    price_incl: string | null
+    price_excl: number | null
+    price_incl: number | null
 }
 
 const PriceSmall: React.FC<priceProps> = ({price_excl, price_incl}) => {

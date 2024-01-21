@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import Link from "next/link"
 import CardContainer from "~/components/cards/CardContainer"
 import { Decimal } from "@prisma/client/runtime/library";
 import ButtonNext from "./buttons/ButtonNext";
@@ -10,10 +9,10 @@ type resultsProps = {
 info: {
   title: string;
   image: string;
-  cities: any;
+  cities:  any;
   nights: string;
-  price_excl: string | null;
-  price_incl: string | null;
+  price_excl: number | null;
+  price_incl: number | null;
   id: string;
   rating: Decimal | null;
   createdAt: Date
@@ -26,6 +25,7 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideSize, setSlideSize] = useState(9);
   const [sortedData, setSortedData] = useState(info);
+
  
   useEffect(() => {
     const handleResize = () => {
@@ -108,8 +108,14 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
   const sortDataAscending = () => {
     const sortedData = [...info];
     sortedData.sort((a, b) => {
-      const priceA = parseFloat(a.price_excl || a.price_incl || 'Infinity');
-      const priceB = parseFloat(b.price_excl || b.price_incl || 'Infinity');
+      let priceA = a.price_excl !== null ? a.price_excl : Infinity;
+      let priceB = b.price_excl !== null ? b.price_excl : Infinity;
+      if (priceA === Infinity && a.price_incl !== null) {
+        priceA = a.price_incl;
+      }
+      if (priceB === Infinity && b.price_incl !== null) {
+        priceB = b.price_incl;
+      }
       return priceA - priceB;
     });
     setSortedData(sortedData);
@@ -118,8 +124,14 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
   const sortDataDescending = () => {
     const sortedData = [...info];
     sortedData.sort((a, b) => {
-      const priceA = parseFloat(a.price_excl || a.price_incl || 'Infinity');
-      const priceB = parseFloat(b.price_excl || b.price_incl || 'Infinity');
+      let priceA = a.price_excl !== null ? a.price_excl : Infinity;
+      let priceB = b.price_excl !== null ? b.price_excl : Infinity;
+      if (priceA === Infinity && a.price_incl !== null) {
+        priceA = a.price_incl;
+      }
+      if (priceB === Infinity && b.price_incl !== null) {
+        priceB = b.price_incl;
+      }
       return priceB - priceA;
     });
     setSortedData(sortedData);

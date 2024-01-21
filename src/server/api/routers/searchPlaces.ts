@@ -3,8 +3,6 @@ import {
     publicProcedure,
   } from "~/server/api/trpc";
   import { z } from "zod";
-  import { TRPCError } from "@trpc/server";
-  import { Prisma } from '@prisma/client'
 
 
   export const searchPlacesRouter = createTRPCRouter({
