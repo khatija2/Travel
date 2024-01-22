@@ -6,7 +6,6 @@ import ButtonPrev from "./buttons/ButtonPrev";
 import Sort from "./search-bars/Sort";
 
 type resultsProps = {
-
   info: {
     cities: {
       id: number;

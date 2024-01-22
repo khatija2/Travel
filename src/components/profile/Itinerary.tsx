@@ -13,7 +13,7 @@ const Itinerary: NextPage<{ profileId: string}> = ({profileId}) => {
     if (isLoading) return <LoadingPage/>;
 
     if (!itinerary) {
-        return <div></div>;;
+        return <div></div>
       }
 
 
@@ -25,7 +25,7 @@ const Itinerary: NextPage<{ profileId: string}> = ({profileId}) => {
              
                    
                     {itinerary?.stays.map((stay) =>
-                       <div> 
+                       <div key={stay.id}> 
                          <h1 className="font-bold sm:text-lg">{stay.hotel.name}</h1>
                     <ul className="list-inside leading-relaxed">
                         <li><div className="flex flex-row items-center gap-1"><MdNightlight/>{stay.nights}</div></li>

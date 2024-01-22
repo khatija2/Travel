@@ -98,7 +98,7 @@ console.log(typeof profile)
                          <div>
                             <ul className="list-disc list-inside text-xs sm:text-base">
                                 {profile.includes.map((include) =>
-                                 <li>{include}</li>
+                                 <li key={include[0]}>{include}</li>
                                  )} 
                             </ul>
                          </div>
@@ -108,7 +108,7 @@ console.log(typeof profile)
                         <div>
                             <ul className="list-disc list-inside text-xs sm:text-base ">
                             {profile.info.map((infoItem) =>
-                                 <li>{infoItem}</li>
+                                 <li key={infoItem[0]}>{infoItem}</li>
                                  )} 
                             </ul>
                         </div>

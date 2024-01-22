@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { ReactComponentElement, ReactElement, ReactEventHandler, useEffect } from "react";
 
-export default function useOnClickOutside(ref: any, closeModal:any) {
+export default function useOnClickOutside(ref: React.MutableRefObject<HTMLInputElement>, closeModal: () => void) {
     useEffect(
       () => {
-        const listener = (event: any) => {
+        const listener = (event: any ) => {
           if (!ref.current || ref.current.contains(event.target)) {
             return;
           }

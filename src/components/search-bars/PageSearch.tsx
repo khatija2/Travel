@@ -97,13 +97,13 @@ const PageSearch: React.FC<searchTypes> = ({category, category2, landing }) => {
     setSelectedRound(item);
   };
 
-  const handleSearch = (e:any, selectedDestination: string|null, selectedBudget:string|null, selectedType:string|null, selectedDeparture:string|null, selectedReturn:string|null, landing: string|null) => {
+  const handleSearch = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>, selectedDestination: string|null, selectedBudget:string|null, selectedType:string|null, selectedDeparture:string|null, selectedReturn:string|null, landing: string) => {
     e.preventDefault()
     if (selectedDestination === null && (selectedBudget === null && selectedType === null ) && selectedDeparture === null) {
       toast.error("Please select search criteria")
     }
     else {
-      router.push(`/search/searchresults?landing=${landing}&selectedDestination=${selectedDestination}&selectedBudget=${selectedBudget}&selectedType=${selectedType}&selectedDeparture=${selectedDeparture}&selectedReturn=${selectedReturn}`)
+      router.push(`/search/searchresults?landing=${landing}&selectedDestination=${selectedDestination !== null ? selectedDestination : "null"}&selectedBudget=${selectedBudget !== null ? selectedBudget : "null"}&selectedType=${selectedType !== null ? selectedType : "null"}&selectedDeparture=${selectedDeparture !== null ? selectedDeparture : "null"}&selectedReturn=${selectedReturn !== null ? selectedReturn : "null"}`)
     }
 
   }

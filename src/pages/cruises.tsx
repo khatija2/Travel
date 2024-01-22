@@ -18,7 +18,7 @@ const Cruises:NextPage = () => {
   if (isLoading) return <LoadingPage/>;
 
   if (!cruises) {
-      return <ErrorPage statusCode={404} />;;
+      return <ErrorPage statusCode={404} />;
     }
 
 

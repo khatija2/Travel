@@ -19,7 +19,7 @@ const Tours:NextPage = () => {
   if (isLoading) return <LoadingPage/>;
 
   if (!tours) {
-      return <ErrorPage statusCode={404} />;;
+      return <ErrorPage statusCode={404} />;
     }
 
   return (

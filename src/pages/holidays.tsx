@@ -18,7 +18,7 @@ const Holidays: NextPage = () => {
   if (isLoading) return <LoadingPage/>;
 
   if (!holidays) {
-      return <ErrorPage statusCode={404} />;;
+      return <ErrorPage statusCode={404} />;
     }
 
   return (

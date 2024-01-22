@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import useOnClickOutside from "~/hooks/closeModal";
 import type { NextPage} from "next";
 import { api } from "~/utils/api";
@@ -24,13 +24,6 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
   useOnClickOutside(ref, () => closeDestinationModal());
 
 
-useEffect(() => {
-  if(searchValue.length >= 2){
-handleSearch()
-}
-}, [searchValue])
-
-
 
  const { data: results, isLoading } =  api.places.getValue.useQuery({searchValue}, {enabled: searchValue.length >= 2});
 
@@ -46,7 +39,7 @@ handleSearch()
   };
 
  
-  const handleSearchChange =  (e: any) => {
+  const handleSearchChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
     if (e.target.value.length >= 2) {
        handleSearch();

@@ -32,9 +32,9 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
  const [selectReturn, setSelectReturn] = useState(currentDate);
  const [leg, setLeg] = useState("depart");
  const [round, setRound] = useState("return")
- const [hoveredDate, setHoveredDate] = useState(null);
- const [departDate, setDepartDate] = useState(null);
- const [returnDate, setReturnDate] = useState(null);
+ const [hoveredDate, setHoveredDate] = useState<dayjs.Dayjs | null>(null);
+ const [departDate, setDepartDate] = useState<string | null>(null);
+ const [returnDate, setReturnDate] = useState<string | null>(null);
  const [chosenDate, setChosenDate] = useState(selectedDeparture)
  const [chosenReturnDate, setChosenReturnDate] = useState(selectedReturn)
  const [chosenLeg, setChosenLeg] = useState(selectedLeg)
@@ -42,11 +42,11 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
 
 
 
-  var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+  let isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
   dayjs.extend(isSameOrBefore)
-  var customParseFormat = require('dayjs/plugin/customParseFormat')
+  let customParseFormat = require('dayjs/plugin/customParseFormat')
   dayjs.extend(customParseFormat)
-  var isBetween = require('dayjs/plugin/isBetween')
+  let isBetween = require('dayjs/plugin/isBetween')
   dayjs.extend(isBetween)
 
 
@@ -54,7 +54,7 @@ const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
 useOnClickOutside(ref, () => closeCalendarModal());
 
-const handleDates = (date: any) => {
+const handleDates = (date: dayjs.Dayjs) => {
 	if (leg === "depart" && date.isAfter(currentDate)) {
 	setSelectDate(date)
 	setDepartDate(date.format('DD/MM/YYYY'))
@@ -83,7 +83,7 @@ const handleClear = () => {
 }
 
 
-const handleDateMouseEnter = (date: any) => {
+const handleDateMouseEnter = (date: dayjs.Dayjs) => {
     if (leg === "return" && date.isAfter(selectDate, 'day')) {
       setHoveredDate(date);
     }
@@ -95,7 +95,7 @@ const handleDateMouseEnter = (date: any) => {
   
   
 
-  const isHovered = (date: any) => {
+  const isHovered = (date: any ) => {
     if (leg === "return" && hoveredDate !== null)  {
       if( date.isAfter(selectDate, 'day') && date.isSameOrBefore(hoveredDate, 'day')) {
 		return true
@@ -105,7 +105,7 @@ const handleDateMouseEnter = (date: any) => {
   };
 
 
-const isInRange = (date: any) => {
+const isInRange = (date: dayjs.Dayjs) => {
     if (leg === "return"  && selectReturn !== currentDate )  {
       if(date.isAfter(selectDate, 'day') && date.isBefore(selectReturn, 'day') ) {
 		return true
@@ -115,7 +115,7 @@ const isInRange = (date: any) => {
   };
 
 
-  const chosenRange = (date:any) => {
+  const chosenRange = (date: dayjs.Dayjs) => {
 	if (chosenDate !== null && chosenReturnDate !== null) {
 	if(date.isAfter(dayjs(chosenDate, "DD-MM-YYYY")) && date.isBefore(dayjs(chosenReturnDate, "DD-MM-YYYY"))   ) {
 	return true
@@ -328,7 +328,7 @@ const handleDoneClick = () => {
 
 				<div className=" grid grid-cols-7 ">
 					{generateDate(today.month() + 1, today.year()).map(
-						({ date, currentMonth, today }, index) => {
+						({ date, currentMonth}, index) => {
 							return (
 								<div
 									key={index}

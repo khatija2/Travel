@@ -48,7 +48,7 @@ const page = landing === 'landing' ? null : landing
  if (isLoading) return <LoadingPage/>;
 
  if (!result) {
-      return <ErrorPage statusCode={404} />;;
+      return <ErrorPage statusCode={404} />;
     }
 
 

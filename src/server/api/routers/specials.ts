@@ -12,8 +12,8 @@ import {
   
   
     getSome: publicProcedure
-    .query(({ ctx }) => {
-     const specials = ctx.prisma.deals.findMany({
+    .query(async({ ctx }) => {
+     const specials = await ctx.prisma.deals.findMany({
        include: {
           profile: { 
               select: {

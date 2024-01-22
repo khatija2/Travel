@@ -1,8 +1,4 @@
-import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-
-
-
 import {
   createTRPCRouter,
   publicProcedure,
@@ -14,8 +10,8 @@ export const dealsRouter = createTRPCRouter({
 
 
   getAll: publicProcedure
-  .query(({ ctx }) => {
-   const deals = ctx.prisma.deals.findMany({
+  .query(async ({ ctx }) => {
+   const deals = await ctx.prisma.deals.findMany({
      include: {
         profile: { 
             select: {
@@ -33,8 +29,6 @@ export const dealsRouter = createTRPCRouter({
 
       if (!deals) throw new TRPCError({ code: "NOT_FOUND" })
       return deals
-   
-  
 
     }),
 

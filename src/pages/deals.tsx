@@ -20,10 +20,10 @@ const Deals: NextPage = () => {
   if (isLoading) return <LoadingPage/>;
 
   if (!deals) {
-      return <ErrorPage statusCode={404} />;;
+      return <ErrorPage statusCode={404} />;
     }
 
-  const info: any = []
+  const info = []
   for (let i =0; i < deals.length; i++) {
    const deal = deals[i]
    if (deal) {info.push(deal.profile)}

@@ -11,38 +11,38 @@ import ButtonNext from "../buttons/ButtonNext"
 
 const Specials: NextPage = () => {
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [slideSize, setSlideSize] = useState(3);
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [slideSize, setSlideSize] = useState(3)
 
  
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
       if (screenWidth <= 576) { 
-        setSlideSize(1);
+        setSlideSize(1)
       } 
       else if (screenWidth <= 912 ) { 
-        setSlideSize(2);
+        setSlideSize(2)
       } 
       else {
-        setSlideSize(3); 
+        setSlideSize(3)
       }
     };
 
-    handleResize();
+    handleResize()
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [])
 
 
-  const { data: specials } = api.specials.getSome.useQuery();
+  const { data: specials } = api.specials.getSome.useQuery()
    
     if (!specials) {
-        return <ErrorPage statusCode={404} />;;
+        return <ErrorPage statusCode={404} />
       }
      
   const totalSlides = Math.ceil(specials.length / slideSize);
@@ -81,7 +81,7 @@ const Specials: NextPage = () => {
       }
     }
 
-    return cards;
+    return cards
   }
 
 
