@@ -4,7 +4,7 @@ import {SlArrowLeft} from 'react-icons/sl'
 import {RiCloseFill} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
 import { generateDate } from "~/hooks/generateDate"
-import dayjs from "dayjs"
+import dayjs, { Dayjs } from "dayjs"
 import toast from "react-hot-toast"
 
 
@@ -20,6 +20,8 @@ type CalendarProps = {
 	selectedLeg: string
 	selectedRound: string
   }
+
+
 
 const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelected, onReturnSelected, onLegSelected, onRoundSelected, selectedDeparture, selectedReturn, selectedLeg, selectedRound}) => {
   
@@ -41,13 +43,8 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
  const [chosenRound, setChosenRound] = useState(selectedRound)
 
 
-
-  let isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
-  dayjs.extend(isSameOrBefore)
-  let customParseFormat = require('dayjs/plugin/customParseFormat')
+  const customParseFormat = require('dayjs/plugin/customParseFormat')
   dayjs.extend(customParseFormat)
-  let isBetween = require('dayjs/plugin/isBetween')
-  dayjs.extend(isBetween)
 
 
 const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -95,9 +92,9 @@ const handleDateMouseEnter = (date: dayjs.Dayjs) => {
   
   
 
-  const isHovered = (date: any ) => {
+  const isHovered = (date: dayjs.Dayjs) => {
     if (leg === "return" && hoveredDate !== null)  {
-      if( date.isAfter(selectDate, 'day') && date.isSameOrBefore(hoveredDate, 'day')) {
+      if( date.isAfter(selectDate, 'day') && (date.isSame(hoveredDate, 'day') || date.isBefore(hoveredDate, 'day')) ) {
 		return true
 	  }
     }

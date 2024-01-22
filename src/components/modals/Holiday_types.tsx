@@ -24,7 +24,8 @@ const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected, land
     closeTypeModal()
   };
 
-  const handleClearFilter = (event: any) => {
+  const handleClearFilter = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    e.preventDefault()
     onTypeSelected('All')
     closeTypeModal()
   };
@@ -44,7 +45,7 @@ const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected, land
             </div>
           </div>
        <div className="sm:pl-2 pb-2">
-        <h3 className=" text-gray-500 dark:text-white hover:bg-gray-100 px-3 py-2" onClick={handleClearFilter}>All</h3>
+        <h3 className=" text-gray-500 dark:text-white hover:bg-gray-100 px-3 py-2" onClick={(e) => handleClearFilter}>All</h3>
        {types.map((item, index) => ( 
         <div className="px-3 pb-1 hover:bg-gray-100 cursor-pointer" key={index} onClick={() => handleItemClick(item)}>
            {item}

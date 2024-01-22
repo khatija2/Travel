@@ -6,6 +6,8 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+ 
+
 
 const convertBudgetRange = (range: string): [number, number] => {
   const sanitizedRange = range.replace(/[^\w\s-]/g, ''); // Remove non-alphanumeric characters
@@ -73,7 +75,7 @@ const tripEnum = selectedType ? stringToTripEnum(selectedType.toUpperCase()) : u
 
 const [budgetLower, budgetUpper] = selectedBudget? convertBudgetRange(selectedBudget) : "null";
 
-const filters: any = []
+const filters:{}[] = []
 
 if (selectedDestination && (selectedDestination !== "null")) {
   filters.push(  
@@ -124,6 +126,7 @@ if   ( returnDate !== null ) {
 
 if  ( departDate !== null) {
   filters.push({ end_date: { gte: departDate as Date }})
+
 }
 
 

@@ -41,7 +41,7 @@ type profileProps = {
 const Profile: NextPage<profileProps> = ({id}) => {
 
     const { data: profile, isLoading } = api.profiles.getById.useQuery({ id });
-console.log(typeof profile)
+
 
     if (isLoading) return <LoadingPage/>;
 

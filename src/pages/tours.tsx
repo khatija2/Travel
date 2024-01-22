@@ -34,9 +34,7 @@ const Tours:NextPage = () => {
 }
 
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ id: string }>
-  ) {
+export async function getStaticProps() {
    
   const ssg = ssgHelper();
   await ssg.tours.getByValue.prefetch();

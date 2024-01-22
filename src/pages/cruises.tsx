@@ -34,9 +34,7 @@ const Cruises:NextPage = () => {
 }
 
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ id: string }>
-  ) {
+export async function getStaticProps() {
    
   const ssg = ssgHelper();
   await ssg.cruises.getByValue.prefetch();

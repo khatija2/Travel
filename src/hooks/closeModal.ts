@@ -3,8 +3,8 @@ import { ReactComponentElement, ReactElement, ReactEventHandler, useEffect } fro
 export default function useOnClickOutside(ref: React.MutableRefObject<HTMLInputElement>, closeModal: () => void) {
     useEffect(
       () => {
-        const listener = (event: any ) => {
-          if (!ref.current || ref.current.contains(event.target)) {
+        const listener = (event: MouseEvent | TouchEvent) => {
+          if (!ref.current || ref.current.contains(event.target as Node)) {
             return;
           }
           closeModal();
