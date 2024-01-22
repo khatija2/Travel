@@ -2,7 +2,6 @@ import React from 'react'
 import PageSearch from "~/components/search-bars/PageSearch";
 import type {
   NextPage,
-  GetStaticPropsContext,
 } from "next";
 import ErrorPage from "next/error";
 import { api } from "~/utils/api";

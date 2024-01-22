@@ -1,7 +1,6 @@
 import React from 'react'
 import type {
   NextPage,
-  GetStaticPropsContext,
 } from "next";
 import ErrorPage from "next/error";
 import { api } from "~/utils/api";

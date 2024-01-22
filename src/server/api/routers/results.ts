@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { Trip } from "@prisma/client";
+import type { Trip } from "@prisma/client";
 import {
   createTRPCRouter,
   publicProcedure,
@@ -75,7 +75,7 @@ const tripEnum = selectedType ? stringToTripEnum(selectedType.toUpperCase()) : u
 
 const [budgetLower, budgetUpper] = selectedBudget? convertBudgetRange(selectedBudget) : "null";
 
-const filters:{}[] = []
+const filters:object[] = []
 
 if (selectedDestination && (selectedDestination !== "null")) {
   filters.push(  

@@ -4,7 +4,7 @@ import {SlArrowLeft} from 'react-icons/sl'
 import {RiCloseFill} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
 import { generateDate } from "~/hooks/generateDate"
-import dayjs, { Dayjs } from "dayjs"
+import dayjs from "dayjs"
 import toast from "react-hot-toast"
 
 
@@ -43,8 +43,7 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
  const [chosenRound, setChosenRound] = useState(selectedRound)
 
 
-  const customParseFormat = require('dayjs/plugin/customParseFormat')
-  dayjs.extend(customParseFormat)
+
 
 
 const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
