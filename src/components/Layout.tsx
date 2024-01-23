@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ChatButton from "./buttons/ChatButton";
 
-import { Inter, Figtree, Nunito } from 'next/font/google';
+import { Inter, Figtree } from 'next/font/google';
  
 const inter = Inter({
   subsets: ['latin'],
@@ -17,11 +17,6 @@ const inter = Inter({
     variable: '--font- figtree',
   });
 
-  const nunito = Nunito({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-nunito',
-  });
 
 export default function PageLayout({
     children,
@@ -29,7 +24,7 @@ export default function PageLayout({
     children: React.ReactNode,
   }) {
     return (
-      <main className={`${inter.variable} ${figtree.variable} ${nunito.variable}`}>
+      <main className={`${inter.variable} ${figtree.variable}`}>
         <Navbar/>
         <ChatButton/>
         <div>{children}</div>

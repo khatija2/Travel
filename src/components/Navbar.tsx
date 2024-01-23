@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
 	  <>
-<div className="font-nunito">
+<div className="font-inter">
   <nav className="bg-white">
   <div className="flex flex-wrap items-center justify-between mx-auto py-4 px-6">
       <Link href="/" className="flex items-center">
