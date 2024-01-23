@@ -16,6 +16,5 @@ export default {
        'mauritiusBanner':  "url('/images/mauritiusBanner.jpeg')",
       }
     }
-  },
-  plugins: []
+  }
 } satisfies Config
