@@ -3,7 +3,6 @@
     "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "noErrorTruncation": true,
     "checkJs": true,
     "skipLibCheck": true,
     "strict": true,
