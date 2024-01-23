@@ -18,7 +18,7 @@ export const itineraryRouter = createTRPCRouter({
             include: {hotel: true}
         }}
       });
-      if (!itinerary) throw new TRPCError({ code: "NOT_FOUND" })
+      if (!itinerary) return;
 
       return itinerary
    

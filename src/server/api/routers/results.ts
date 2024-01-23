@@ -148,7 +148,7 @@ if  ( departDate !== null) {
       })
     
   
-        if (!results) throw new TRPCError({ code: "NOT_FOUND" })
+        if (!results) return;
         return results
      
 
