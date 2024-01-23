@@ -26,7 +26,7 @@ const popularDestination: NextPage<{place: string}> = ({place}) => {
   return (
     <div>
         <div className="bg-amalfi z-0 flex flex-col items-center justify-center bg-cover bg-center shadow-lg h-full w-full sm:h-1/2 relative">
-        <div className="text-3xl sm:text-6xl font-bold text-white py-4 sm:py-10 font-inter z-10">Visit {place}</div>
+        <div className="text-3xl sm:text-6xl font-bold text-white py-4 sm:py-10 font-nunito z-10">Visit {place}</div>
         </div>
         <ResultsContainer info={(popular !== undefined) ? popular : []}/>
     </div>

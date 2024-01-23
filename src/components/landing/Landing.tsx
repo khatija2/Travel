@@ -13,7 +13,7 @@ import PageSearch from "../search-bars/PageSearch"
 
 const Landing: NextPage = () => {
   return (
-   <div className="font-figtree">
+   <div className="font-nunito">
     <div className=" bg-mauritiusBanner z-0 flex flex-col items-center justify-center bg-cover bg-center h-full w-full sm:h-1/2">
       <PageSearch category="Destination" category2="Travel category" landing={"landing"} />
       <Specials/>

@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         inter: ['var(--font-inter)'],
-         figtree: ['var(--font-figtree)'],
+         nunito: ['var(--font-nunito)'],
       
       },
       backgroundImage: {
