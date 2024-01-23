@@ -67,7 +67,7 @@ const Profile: NextPage<profileProps> = ({id}) => {
             <div className="flex flex-col p-2 2xl:p-8 sm:p-3 sm:w-3/5 w-full bg-gray-50">
                 <div className="sm:text-3xl text-xl font-bold sm:mb-4 mb-2 text-sky-800">{profile.title}</div>
                 <div>{profile.description}</div>
-                <div className="flex flex-row items-center sm:gap-3 gap-2 text-xs sm:text-sm  lg:text-base text-gray-500 py-2 flex-wrap">
+                <div className="flex flex-row items-center sm:gap-3 gap-2 text-xs sm:text-sm lg:text-base text-gray-500 py-2 flex-wrap">
                                 <div className="flex flex-row items-center gap-1"><MdHotel/><p>{profile.nights}</p></div>
                                 <div className="flex flex-row">
                                     <ul className="flex flex-row list-disc list-inside sm:gap-2 gap-1 flex-wrap ">
@@ -94,7 +94,7 @@ const Profile: NextPage<profileProps> = ({id}) => {
                         <div className="text-xs sm:text-base">{profile.meals}</div>
                     </div>
                     <div>
-                        <div className={(profile.includes.length !== 0 ) ? `flex flex-row items-center gap-1 font-bold text-sm sm:text-lg` : `hidden`}><AiOutlineCheck/>Includes:</div>
+                        <div className={(profile.includes.length !== 0 ) ? "flex flex-row items-center gap-1 font-bold text-sm sm:text-lg" : "hidden"}><AiOutlineCheck/>Includes:</div>
                          <div>
                             <ul className="list-disc list-inside text-xs sm:text-base">
                                 {profile.includes.map((include) =>
@@ -104,9 +104,9 @@ const Profile: NextPage<profileProps> = ({id}) => {
                          </div>
                     </div>
                     <div>
-                    <div className={(profile.info.length !== 0 ) ? `flex flex-row items-center gap-1 font-bold text-sm sm:text-lg` : `hidden`}><IoInformationCircleOutline/>Important Info</div>
+                    <div className={(profile.info.length !== 0 ) ? "flex flex-row items-center gap-1 font-bold text-sm sm:text-lg" : "hidden"}><IoInformationCircleOutline/>Important Info</div>
                         <div>
-                            <ul className="list-disc list-inside text-xs sm:text-base ">
+                            <ul className="list-disc list-inside text-xs sm:text-base">
                             {profile.info.map((infoItem) =>
                                  <li key={infoItem[0]}>{infoItem}</li>
                                  )} 

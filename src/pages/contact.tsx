@@ -65,7 +65,7 @@ const Contact = () => {
 <>
 
 <div className="flex flex-col bg-sky-100 p-8 sm:p-16 lg:p-20">
-    <div className="font-bold text-2xl md:text-3xl lg:text-4xl pb-6 sm:pb-10 text-sky-900" >Contact Us</div>
+    <div className="font-bold text-2xl md:text-3xl lg:text-4xl pb-6 sm:pb-10 text-sky-900">Contact Us</div>
     <div className="font-md whitespace-pre-wrap mb-6">
     Simply complete the form below with your request and we will get back to you shortly.  
     </div>
@@ -93,7 +93,7 @@ const Contact = () => {
         </table>
     </div>
 <div className="font-md bg-white rounded-lg w-full sm:p-4 lg:p-6 2xl:p-10">
-    <h1 className="font-bold my-4 md:my-6  md:mb-8 text-lg lg:text-2xl pl-2">Enquiry Form</h1>
+    <h1 className="font-bold my-4 md:my-6 md:mb-8 text-lg lg:text-2xl pl-2">Enquiry Form</h1>
     <div className="px-5 sm:p-0">
     {showCalendarModal && (
       <Calendar closeCalendarModal={closeCalendarModal} onDepartureSelected={handleDepartureSelected} onReturnSelected={handleReturnSelected} onLegSelected={handleLegSelected}  onRoundSelected={handleRoundSelected} selectedDeparture={selectedDeparture} selectedReturn={selectedReturn} selectedLeg={selectedLeg} selectedRound={selectedRound}/>
@@ -103,11 +103,11 @@ const Contact = () => {
     <div className="flex flex-col w-full justify-center items-center px-2 gap-4 sm:grid grid-cols-2">
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Your name</label>
-            <input type="text" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. John Doe" required/>
+            <input type="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. John Doe" required/>
         </div>
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Phone number</label>
-            <input type="tel" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"/>
+            <input type="tel" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"/>
         </div>
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Email address</label>
@@ -119,7 +119,7 @@ const Contact = () => {
         </div> 
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Travel Dates</label>
-            <div className=" border border-gray-300 text-sm rounded-lg flex justify-between text-gray-900 items-center w-full p-2.5" onClick={() => handleCalendarModal()}>
+            <div className="border border-gray-300 text-sm rounded-lg flex justify-between text-gray-900 items-center w-full p-2.5" onClick={() => handleCalendarModal()}>
                 <div>{(selectedDeparture !== null && selectedReturn === null) ? selectedDeparture : (selectedDeparture !== null && selectedReturn !== null) ? `${selectedDeparture} - ${selectedReturn}` : "Anytime"}</div>
                 <span className="sr-only">Click to open calendar</span>
        
@@ -141,7 +141,7 @@ const Contact = () => {
         </div>
             <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Other information</label>
-            <textarea className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full h-40 p-2.5" placeholder="Type your requests here..."/>
+            <textarea className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full h-40 p-2.5" placeholder="Type your requests here..."/>
             </div> 
         <div className="flex items-center justify-center mb-4 sm:mb-0">
              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm sm:text-lg w-full sm:w-1/3 px-5 py-2.5 text-center">Submit</button>
