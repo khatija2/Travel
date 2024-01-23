@@ -74,7 +74,7 @@ const Footer = () => {
               <Link href="#" className="text-gray-500 hover:text-gray-900">
               <AiOutlineInstagram size={20}/>
                   <span className="sr-only">Instagram page</span>
-                   </Link>
+              </Link>
           </div>
       </div>
     </div>
