@@ -21,7 +21,7 @@ export default function Navbar() {
   <nav className="bg-white">
   <div className="flex flex-wrap items-center justify-between mx-auto py-4 px-6">
       <Link href="/" className="flex items-center">
-        <Image src="/images/t-flag.jpg" alt="Logo" height={10} width={15}  className="h-8 w-4 mr-3" />
+        <Image src="/images/t-flag.jpg" alt="Logo" height={10} width={15}  className="h-8 w-auto mr-3" />
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-sky-900">
           Travel
         </span>
