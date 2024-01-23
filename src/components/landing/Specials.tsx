@@ -86,11 +86,11 @@ const Specials: NextPage = () => {
 
 
   return (
-    <div className="w-full h-200  cards-center px-10 sm:px-20 sm:pt-2 sm:pb-6">
+    <div className="w-full h-200 px-10 sm:px-20 sm:pt-2 sm:pb-6">
       <div className="flex flex-row justify-center">
        <div className="flex gap-2 2xl:gap-6">
         <div>
-          <ButtonPrev onClick={handlePrev} disabled={isFirstSlide} />
+          <ButtonPrev onClick={handlePrev} disabled={isFirstSlide}/>
         </div>
         <div className="flex sm:gap-4 2xl:gap-6">
    

@@ -41,7 +41,7 @@ const Itinerary: NextPage<{ profileId: string}> = ({profileId}) => {
             <div className="m-4 flex flex-col ">
             {itinerary?.daily.map((itin, index) =>
                 <div className="flex flex-row w-full mb-4" key={index}>
-                    <div className="w-1/6 font-bold sm:text-lg flex flex-wrap sm:flex-nowrap items-center pr-1 sm:pr-0 sm:pl-6 2xl:pl-10 ">
+                    <div className="w-1/6 font-bold sm:text-lg flex flex-wrap sm:flex-nowrap items-center pr-1 sm:pr-0 sm:pl-6 2xl:pl-10">
                      Day {index + 1 }
                     </div>
                     <div className="w-5/6 flex text-sm items-center">

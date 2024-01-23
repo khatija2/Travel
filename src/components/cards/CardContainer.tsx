@@ -46,10 +46,10 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
                 </div>
             <div className="flex flex-row items-center gap-3 text-xs lg:text-sm text-gray-500 py-2">
                 <div className="flex flex-row items-center gap-1"><MdNightlight/><p>{nights}</p></div>
-                <div className={(cities?.length !== 0 ) ? `flex flex-row items-center gap-1` : `flex flex-row items-center gap-1 opacity-0`} key={cities?.length}><SlLocationPin/><p>{cities?.length} cities</p></div>
+                <div className={(cities?.length !== 0 ) ? "flex flex-row items-center gap-1" : "flex flex-row items-center gap-1 opacity-0"} key={cities?.length}><SlLocationPin/><p>{cities?.length} cities</p></div>
             </div>
             <div className="flex flex-row justify-between items-end" >
-                    <div className={(price_excl || price_incl) ? `opacity-100` : `opacity-0`}>
+                    <div className={(price_excl || price_incl) ? "opacity-100" : "opacity-0"}>
                         <p>From</p>
                     <h1 className="font-bold lg:text-2xl">R {price_excl || price_incl}</h1>
                     </div>

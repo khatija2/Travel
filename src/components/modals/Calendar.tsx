@@ -173,8 +173,8 @@ const handleDoneClick = () => {
   };
 
   return (
-    <div className="absolute z-50 top-50  lg:w-4/5 -translate-x-6 sm:translate-x-0 translate-y-24 sm:translate-y-44 flex justify-center">
-        <div ref={ref} className="flex flex-col items-center justify-center w-full sm:w-9/10 p-1 rounded-lg shadow-2xl border border-gray-200 bg-white 2xl:w-1/2 ">
+    <div className="absolute z-50 top-50 lg:w-4/5 -translate-x-6 sm:translate-x-0 translate-y-24 sm:translate-y-44 flex justify-center">
+        <div ref={ref} className="flex flex-col items-center justify-center w-full sm:w-9/10 p-1 rounded-lg shadow-2xl border border-gray-200 bg-white 2xl:w-1/2">
             <div className="flex items-center justify-start w-full">
                 <button type="button" onClick={closeCalendarModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
                 <RiCloseFill/>
@@ -182,7 +182,7 @@ const handleDoneClick = () => {
             </div>
         <div className="flex items-center justify-between pt-2  w-full pr-4 sm:pr-6">
             <div>
-                <div className="p-1 text-xs sm:text-base ml-1 lg:pl-24 flex-wrap ">{leg === "depart" || chosenLeg === "depart" ? "Earliest Departure ..." : "Latest Return ..." }</div>
+                <div className="p-1 text-xs sm:text-base ml-1 lg:pl-24 flex-wrap">{leg === "depart" || chosenLeg === "depart" ? "Earliest Departure ..." : "Latest Return ..." }</div>
                
             </div>
             <div className="bg-gray-200 rounded-full p-0.5 sm:p-1 sm:text-sm my-1 sm:my-2  ">
@@ -190,16 +190,16 @@ const handleDoneClick = () => {
                 <button className={`${round !== "single" && chosenRound === "return" ? "bg-white" : "bg-transparent text-gray-400" } rounded-full text-xs px-1.5 sm:px-2 py-1 sm:py-1.5`} onClick={() => chooseReturn() }>Return</button>
             </div>
         </div>
-        <div className="flex flex-row justify-center items-center relative  ">
+        <div className="flex flex-row justify-center items-center relative">
 
                 <div className="pt-6 pb-2">          
                 <div className="flex gap-1 sm:divide-x justify-center h-full px-3 items-center sm:flex-row flex-col">
-			<div className="w-70 h-70 lg:w-96 ">
+			<div className="w-70 h-70 lg:w-96">
 				<div className="flex justify-between items-center px-2 flex-row">
 					<div className="select-none font-semibold flex flex-row gap-1.5">
 						<span>{months[today.month()]}</span><span>{today.year()}</span>
 					</div>
-					<div className="flex gap-2 items-center ">
+					<div className="flex gap-2 items-center">
 						<SlArrowLeft
 							className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:scale-105 transition-all"
 							onClick={() => {
@@ -293,9 +293,9 @@ const handleDoneClick = () => {
 					<div className="select-none font-semibold flex flex-row gap-1.5">
 						<span>{months[today.month() === 11 ? 0 : today.month() + 1]}</span><span>{today.month() === 11 ? today.year() + 1 : today.year()}</span>
 					</div>
-					<div className="flex gap-2 items-center ">
+					<div className="flex gap-2 items-center">
 						<h1
-							className=" cursor-pointer hover:scale-105 transition-all"
+							className="cursor-pointer hover:scale-105 transition-all"
 							onClick={() => {
 								setToday(currentDate);
 							}}
@@ -337,7 +337,7 @@ const handleDoneClick = () => {
 												.toDate()
 												.toDateString() === currentDate.toDate()
 												.toDateString()) ? "text-gray-500" :
-												(selectDate.toDate().toDateString() === date.toDate().toDateString() || selectReturn.toDate().toDateString() === date.toDate().toDateString() ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' )
+												(selectDate.toDate().toDateString() === date.toDate().toDateString() || selectReturn.toDate().toDateString() === date.toDate().toDateString() ? (currentMonth ? "bg-sky-800 text-white" : "bg-white")
 												: "" )	}
 												${(chosenDate === date.format('DD/MM/YYYY')) ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' ) : "" }
 												${(chosenReturnDate === date.format('DD/MM/YYYY')) ? (currentMonth ? 'bg-sky-800 text-white' : 'bg-white' ) : "" }

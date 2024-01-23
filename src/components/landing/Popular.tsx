@@ -40,10 +40,10 @@ const Popular: NextPage = () => {
         const card = destinations[i];
         if (card) {
           cards.push(
-            <Link href=" " className=" hover:opacity-30 flex" key={card.id}>
-            <div className="items-center justify-center flex text-white z-0 text-xl 2xl:text-3xl font-bold relative  ">
-                <div className="flex items-center justify-center w-full  z-0 "> <Image src={card.image} alt="" width={250} height={25} className="flex rounded-lg z-0r" /></div>
-                <div className="flex items-center justify-center w-full h-full z-50 absolute ">{card.destination}</div>
+            <Link href={`/popular-destination/${card.destination}`} className="hover:opacity-30 flex" key={card.id}>
+            <div className="items-center justify-center flex text-white z-0 text-xl 2xl:text-3xl font-bold relative">
+                <div className="flex items-center justify-center w-full z-0"> <Image src={card.image} alt="image" width={250} height={25} className="flex rounded-lg z-0r" /></div>
+                <div className="flex items-center justify-center w-full h-full z-50 absolute">{card.destination}</div>
             </div>
         </Link>
           );
@@ -58,17 +58,17 @@ const Popular: NextPage = () => {
   return (
 <>
     <div className="sm:flex justify-center flex-col items-center w-full px-20 py-4 mt-2 hidden">
-        <div className=" sm:w-full flex sm:justify-start sm:pl-28 lg:pl-40 2xl:pl-80 text-lg font-bold ">
+        <div className="sm:w-full flex sm:justify-start sm:pl-28 lg:pl-40 2xl:pl-80 text-lg font-bold">
             <h1>Popular Destinations</h1>
         </div>
         <span className="sr-only">Select a Destination</span>
         <div className="flex items-center justify-center py-8 w-3/4 h-full relative">
-            <div className="grid grid-cols-3 gap-8 2xl:gap-20 w-full h-full relative ">
+            <div className="grid grid-cols-3 gap-8 2xl:gap-20 w-full h-full relative">
             {destinations.map((destination) =>
-            <Link href={`/popular-destination/${destination.destination}`} className=" hover:opacity-30 flex" key={destination.id}>
-            <div className="items-center justify-center flex text-white z-0 text-xl 2xl:text-3xl font-bold relative  ">
-                <div className="flex items-center justify-center w-full h-50 z-0 "> <Image src={destination.image} alt="popular destination link" width={500} height={50} className="flex rounded-lg z-0r" /></div>
-                <div className="flex items-center justify-center w-full h-full z-50 absolute ">{destination.destination}</div>
+            <Link href={`/popular-destination/${destination.destination}`} className="hover:opacity-30 flex" key={destination.id}>
+            <div className="items-center justify-center flex text-white z-0 text-xl 2xl:text-3xl font-bold relative">
+                <div className="flex items-center justify-center w-full h-50 z-0 "> <Image src={destination.image} alt="popular destination link" width={500} height={50} className="flex rounded-lg z-0r"/></div>
+                <div className="flex items-center justify-center w-full h-full z-50 absolute">{destination.destination}</div>
             </div>
             </Link>
             )}
