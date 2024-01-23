@@ -11,8 +11,9 @@ const Footer = () => {
     <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-4 md:mb-0 hidden sm:flex">
-              <Link href="" className="flex items-center">
-                  <Image src="" className="h-8 mr-3" alt="Logo" />
+              <Link href="/" className="flex items-center">
+                  <Image src="/images/t-flag.jpg" height={10} width={15}
+                   className="h-8 w-auto mr-3" alt="Logo" />
                   <span className="self-center text-2xl font-semibold whitespace-nowrap">Travel</span>
               </Link>
           </div>

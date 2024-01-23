@@ -81,15 +81,15 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
       if (card) {
         cards.push(
           <CardContainer
-          image={card.image}
-          title={card.title}
-          cities ={card.cities}
-          nights= {card.nights}
-          price_excl= {card.price_excl}
-          price_incl ={card.price_incl}
-          id ={card.id}
-          rating ={card.rating}
-          key={card.id}
+          key = {card.id}
+          image = {card.image}
+          title = {card.title}
+          cities = {card.cities}
+          nights = {card.nights}
+          price_excl = {card.price_excl}
+          price_incl = {card.price_incl}
+          id = {card.id}
+          rating = {card.rating}
           />
         );
       }
@@ -102,7 +102,7 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
     const pages = []
     for (let i=0; i < totalSlides; i++) {
       pages.push(
-      <button onClick={() => setCurrentIndex(i)} className="rounded-lg px-2 py-1 text-gray-700  hover:bg-gray-300 text-sm">{i + 1}</button>)
+      <button onClick={() => setCurrentIndex(i)} className="rounded-lg px-2 py-1 text-gray-700  hover:bg-gray-300 text-sm" key={i}>{i + 1}</button>)
     }
     return pages
   }
@@ -166,10 +166,10 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
       <div className="flex flex-col items-center justify-center">
           <Sort onClickAscending={sortDataAscending} onClickDescending={sortDataDescending} onClickNewest={sortDataNewest} onClickOldest={sortDataOldest}/>
         <div className="flex flex-col justify-center items-center w-4/5 sm:w-full sm:px-6 lg:px-12">
-              <div className="sm:grid grid-cols-3 2xl:grid-cols-5 gap-4 lg:gap-6 2xl:gap-10" key="render list">
+              <div className="sm:grid grid-cols-3 2xl:grid-cols-5 gap-4 lg:gap-6 2xl:gap-10">
                 {renderCards()}
               </div>
-             <div className="flex flex-row items-center justify-center  sm:p-4 lg:p-8 flex-nowrap z-0" key="button menu">
+             <div className="flex flex-row items-center justify-center  sm:p-4 lg:p-8 flex-nowrap z-0">
                 <ButtonPrev onClick={handlePrev} disabled={isFirstSlide} tiny="tiny" />
                {pageIndex()}
                 <ButtonNext onClick={handleNext} disabled={isLastSlide} tiny="tiny"/>
