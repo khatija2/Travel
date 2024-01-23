@@ -130,7 +130,7 @@ const Contact = () => {
         <button  className="rounded-lg text-sm text-gray-900 px-4 py-2.5 flex justify-between items-center border border-gray-300 w-full" type="button" onClick={handleTypeModal}>{selectedType !== null ? selectedType : "Any Category"}<RiArrowDownSLine size={18}/></button>
         <span className="sr-only">Dropdown menu</span>
         <div className="z-10 w-full relative">
-            <div className={`bg-white rounded-lg shadow absolute w-full text-gray-900 ${showTypeModal === false ? "hidden" : ""}`} ref={ref}>
+            <div className={showTypeModal === false ? "hidden" : "bg-white rounded-lg shadow absolute w-full text-gray-900"} ref={ref}>
             {types.map((item, index) => ( 
         <div className="px-3 pb-1 hover:bg-gray-100 cursor-pointer" key={index} onClick={() => handleItemClick(item)}>
            {item}
