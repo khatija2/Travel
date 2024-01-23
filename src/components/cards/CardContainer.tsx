@@ -33,7 +33,7 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
         <div className="flex px-2">
             <Image src={image} alt="" width={400} height={50} className="rounded-lg" />
         </div>
-            <div className="flex flex-col justify-between py-2 ">
+            <div className="flex flex-col justify-between py-2">
             <div className="flex items-center lg:text-xl">
                 <IoMdStar color="#facc15"/>
                 <IoMdStar color="#facc15"/>

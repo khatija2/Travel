@@ -165,11 +165,11 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
   return (
       <div className="flex flex-col items-center justify-center">
           <Sort onClickAscending={sortDataAscending} onClickDescending={sortDataDescending} onClickNewest={sortDataNewest} onClickOldest={sortDataOldest}/>
-        <div className="flex flex-col justify-center items-center w-4/5 sm:w-full sm:px-6 lg:px-12 ">
-              <div className="sm:grid grid-cols-3 2xl:grid-cols-5 gap-4 lg:gap-6 2xl:gap-10">
+        <div className="flex flex-col justify-center items-center w-4/5 sm:w-full sm:px-6 lg:px-12">
+              <div className="sm:grid grid-cols-3 2xl:grid-cols-5 gap-4 lg:gap-6 2xl:gap-10" key="render list">
                 {renderCards()}
               </div>
-             <div className="flex flex-row items-center justify-center  sm:p-4 lg:p-8 flex-nowrap z-0">
+             <div className="flex flex-row items-center justify-center  sm:p-4 lg:p-8 flex-nowrap z-0" key="button menu">
                 <ButtonPrev onClick={handlePrev} disabled={isFirstSlide} tiny="tiny" />
                {pageIndex()}
                 <ButtonNext onClick={handleNext} disabled={isLastSlide} tiny="tiny"/>

@@ -14,8 +14,8 @@ export default {
        'maldives': "url('/images/maldives_new.jpeg')",
        'amalfi': "url('/images/Amalfi.jpeg')",
        'mauritiusBanner':  "url('/images/mauritiusBanner.jpeg')",
-      },
-    },
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 } satisfies Config
