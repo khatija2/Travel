@@ -16,7 +16,6 @@ const Itinerary: NextPage<{ profileId: string}> = ({profileId}) => {
         return <div></div>
       }
 
-
   return (
     <div className="bg-white my-4 sm:my-6 2xl:my-10 border">
             <div className="flex text-xl sm:text-3xl font-bold justify-center pt-3 2xl:pt-8 sm:py-4"><h1>Itinerary</h1></div>

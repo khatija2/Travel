@@ -18,8 +18,7 @@ export const itineraryRouter = createTRPCRouter({
             include: {hotel: true}
         }}
       });
-      if (!itinerary) return;
-
+      if (!itinerary) return ""
       return itinerary
    
   

@@ -96,4 +96,5 @@ enum Trip {
   TOURS
   RESORTS
   FLIGHTS
+  BUSINESS
 }

@@ -63,6 +63,7 @@ export const resultsRouter = createTRPCRouter({
         case 'TOURS':
         case 'RESORTS':
         case 'FLIGHTS':
+        case 'BUSINESS':  
           return input as Trip;
         default:
           return undefined;
