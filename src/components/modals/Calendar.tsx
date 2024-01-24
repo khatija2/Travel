@@ -7,6 +7,7 @@ import { generateDate } from "~/hooks/generateDate"
 import dayjs from 'dayjs';
 import toast from "react-hot-toast"
 import type {Dayjs, PluginFunc } from "dayjs"
+import { CustomParser } from "prettier"
 
 
 
@@ -23,7 +24,12 @@ type CalendarProps = {
   }
 
 
-  type CustomParser = (dateString: string, format: string, locale?: string) => dayjs.Dayjs | Date ;
+
+  type PluginOptions = {
+   customParser?: (dateString: string, format: string, date: Date, locale?: string) => dayjs.Dayjs
+}
+
+
 
 const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelected, onReturnSelected, onLegSelected, onRoundSelected, selectedDeparture, selectedReturn, selectedLeg, selectedRound}) => {
   
@@ -45,8 +51,8 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
  const [chosenRound, setChosenRound] = useState(selectedRound)
 
 
- const customParseFormat: PluginFunc<CustomParser> = require('dayjs/plugin/customParseFormat');
  
+ const customParseFormat: PluginFunc<CustomParser> = require('dayjs/plugin/customParseFormat');
 
 dayjs.extend(customParseFormat);
 
