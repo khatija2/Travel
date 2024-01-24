@@ -6,8 +6,7 @@ import useOnClickOutside from "~/hooks/closeModal"
 import { generateDate } from "~/hooks/generateDate"
 import dayjs from 'dayjs';
 import toast from "react-hot-toast"
-import type {PluginFunc } from "dayjs"
-
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 
 
@@ -25,9 +24,9 @@ type CalendarProps = {
 
 
 
-  type PluginOptions = {
-   customParserFormat?: (dateString: string, format: string, date: Date, locale?: string) => dayjs.Dayjs
-}
+ /* type PluginOptions = {
+   customParseFormat?: (dateString: string, format: string, date: Date, locale?: string) => dayjs.Dayjs
+}*/
 
 
 
@@ -52,7 +51,6 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
 
 
  
- const customParseFormat: PluginFunc<PluginOptions> = require('dayjs/plugin/customParseFormat');
 
 dayjs.extend(customParseFormat);
 
