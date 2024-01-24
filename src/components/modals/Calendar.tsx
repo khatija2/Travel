@@ -23,7 +23,7 @@ type CalendarProps = {
   }
 
 
-  type CustomParser = (dateString: string, format: string, locale?: string) => Dayjs | Date ;
+  type CustomParser = (dateString: string, format: string, locale?: string) => dayjs.Dayjs | Date ;
 
 const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelected, onReturnSelected, onLegSelected, onRoundSelected, selectedDeparture, selectedReturn, selectedLeg, selectedRound}) => {
   
@@ -45,7 +45,7 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
  const [chosenRound, setChosenRound] = useState(selectedRound)
 
 
- const customParseFormat: PluginFunc<{ customParseFormat: CustomParser }> = require('dayjs/plugin/customParseFormat');
+ const customParseFormat: PluginFunc<CustomParser> = require('dayjs/plugin/customParseFormat');
  
 
 dayjs.extend(customParseFormat);
