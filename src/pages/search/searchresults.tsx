@@ -55,7 +55,7 @@ const page = landing === 'landing' ? null : landing
   return (
     <div>
         <div className="bg-amalfi z-0 flex flex-col items-center justify-center bg-cover bg-center shadow-lg h-full w-full sm:h-1/2">
-        <div className="text-3xl sm:text-6xl font-bold text-white pt-4 pb-2 sm:pt-10 font-nunito">Results</div>
+        <div className="text-3xl sm:text-6xl font-bold text-white pt-4 pb-2 sm:pt-6 font-nunito">Results</div>
         </div>
         <div className={result.length === 0 ? "text-lg sm:text-2xl text-center text-black p-4 sm:pt-10 font-inter" : "hidden"}>There are no results that meet your critera.  Perhaps try a wider search...</div>
         <ResultsContainer info={result}/>

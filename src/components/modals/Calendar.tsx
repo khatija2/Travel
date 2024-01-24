@@ -79,13 +79,16 @@ const handleClear = () => {
 	setSelectDate(currentDate)
 	setSelectReturn(currentDate)
 	setLeg("depart")
+	setDepartDate(null)
+	setReturnDate(null)
 	setHoveredDate(null)
 	setChosenDate(null)
 	setChosenReturnDate(null)
 	setChosenLeg("depart")	
 	setChosenRound("return")
+	onDepartureSelected(null)
+    onReturnSelected(null)	
 }
-
 
 const handleDateMouseEnter = (date: dayjs.Dayjs) => {
     if (leg === "return" && date.isAfter(selectDate)) {
@@ -109,6 +112,7 @@ const handleDateMouseEnter = (date: dayjs.Dayjs) => {
   };
 
 
+
 const isInRange = (date: dayjs.Dayjs) => {
     if (leg === "return"  && selectReturn !== currentDate )  {
       if(date.isAfter(selectDate) && date.isBefore(selectReturn) ) {
@@ -121,10 +125,11 @@ const isInRange = (date: dayjs.Dayjs) => {
 
   const chosenRange = (date: dayjs.Dayjs) => {
 	if (chosenDate !== null && chosenReturnDate !== null) {
-	if(date.isAfter(chosenDate) && date.isBefore(chosenReturnDate)) {
+	if(date.isAfter(dayjs(chosenDate, 'DD/MM/YYYY')) && date.isBefore(dayjs(chosenReturnDate, 'DD/MM/YYYY'))) {
 	return true
+	 }
 	}
-	}
+	return false;
   }
 
 const chooseSingle = () => {
