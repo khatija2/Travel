@@ -6,7 +6,7 @@ import useOnClickOutside from "~/hooks/closeModal"
 import { generateDate } from "~/hooks/generateDate"
 import dayjs from "dayjs"
 import toast from "react-hot-toast"
-import { PluginFunc } from 'dayjs'
+import type { PluginFunc } from 'dayjs'
 
 
 
@@ -22,7 +22,7 @@ type CalendarProps = {
 	selectedRound: string
   }
 
-declare interface PluginOptions {
+type PluginOptions = {
     parseTwoDigitYear?: (yearString: string) => number
 }
 
