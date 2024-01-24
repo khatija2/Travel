@@ -4,9 +4,9 @@ import {SlArrowLeft} from 'react-icons/sl'
 import {RiCloseFill} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
 import { generateDate } from "~/hooks/generateDate"
-import dayjs from "dayjs"
+import dayjs from 'dayjs';
 import toast from "react-hot-toast"
-
+import type {Dayjs, PluginFunc } from "dayjs"
 
 
 
@@ -23,7 +23,7 @@ type CalendarProps = {
   }
 
 
-
+  type CustomParser = (dateString: string, format: string, locale?: string) => Dayjs | Date ;
 
 const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelected, onReturnSelected, onLegSelected, onRoundSelected, selectedDeparture, selectedReturn, selectedLeg, selectedRound}) => {
   
@@ -36,7 +36,7 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
  const [selectReturn, setSelectReturn] = useState(currentDate);
  const [leg, setLeg] = useState("depart");
  const [round, setRound] = useState("return")
- const [hoveredDate, setHoveredDate] = useState<dayjs.Dayjs | null>(null);
+ const [hoveredDate, setHoveredDate] = useState<dayjs.Dayjs | string | null>(null);
  const [departDate, setDepartDate] = useState<string | null>(null);
  const [returnDate, setReturnDate] = useState<string | null>(null);
  const [chosenDate, setChosenDate] = useState(selectedDeparture)
@@ -45,10 +45,10 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
  const [chosenRound, setChosenRound] = useState(selectedRound)
 
 
+ const customParseFormat: PluginFunc<{ customParseFormat: CustomParser }> = require('dayjs/plugin/customParseFormat');
  
 
- dayjs.extend(require('dayjs/plugin/customParseFormat'))
- 
+dayjs.extend(customParseFormat);
 
 const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -84,7 +84,7 @@ const handleClear = () => {
 
 
 const handleDateMouseEnter = (date: dayjs.Dayjs) => {
-    if (leg === "return" && date.isAfter(selectDate, 'day')) {
+    if (leg === "return" && date.isAfter(selectDate)) {
       setHoveredDate(date);
     }
 
@@ -97,7 +97,7 @@ const handleDateMouseEnter = (date: dayjs.Dayjs) => {
 
   const isHovered = (date: dayjs.Dayjs) => {
     if (leg === "return" && hoveredDate !== null)  {
-      if( date.isAfter(selectDate, 'day') && (date.isSame(hoveredDate, 'day') || date.isBefore(hoveredDate, 'day')) ) {
+      if( date.isAfter(selectDate) && (date.isSame(hoveredDate) || date.isBefore(hoveredDate)) ) {
 		return true
 	  }
     }
@@ -107,7 +107,7 @@ const handleDateMouseEnter = (date: dayjs.Dayjs) => {
 
 const isInRange = (date: dayjs.Dayjs) => {
     if (leg === "return"  && selectReturn !== currentDate )  {
-      if(date.isAfter(selectDate, 'day') && date.isBefore(selectReturn, 'day') ) {
+      if(date.isAfter(selectDate) && date.isBefore(selectReturn) ) {
 		return true
 	  }
     }
@@ -117,7 +117,7 @@ const isInRange = (date: dayjs.Dayjs) => {
 
   const chosenRange = (date: dayjs.Dayjs) => {
 	if (chosenDate !== null && chosenReturnDate !== null) {
-	if(date.isAfter(dayjs(chosenDate, "DD-MM-YYYY")) && date.isBefore(dayjs(chosenReturnDate, "DD-MM-YYYY"))   ) {
+	if(date.isAfter(chosenDate) && date.isBefore(chosenReturnDate)) {
 	return true
 	}
 	}
