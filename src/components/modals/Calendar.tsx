@@ -6,7 +6,7 @@ import useOnClickOutside from "~/hooks/closeModal"
 import { generateDate } from "~/hooks/generateDate"
 import dayjs from "dayjs"
 import toast from "react-hot-toast"
-import { PluginFunc, ConfigType, OpUnitType  } from 'dayjs'
+
 
 
 
@@ -22,11 +22,6 @@ type CalendarProps = {
 	selectedRound: string
   }
 
-  interface PluginOptions {
-    parseTwoDigitYear?: (yearString: string) => number
-	isBefore(date?: ConfigType, unit?: OpUnitType): boolean
-	isAfter(date?: ConfigType, unit?: OpUnitType): boolean
-}
 
 
 
@@ -51,8 +46,8 @@ const Calendar: React.FC<CalendarProps> = ({closeCalendarModal, onDepartureSelec
 
 
  
- const customParseFormat: PluginFunc<PluginOptions> = require('dayjs/plugin/customParseFormat')
- dayjs.extend(customParseFormat)
+
+ dayjs.extend(require('dayjs/plugin/customParseFormat'))
  
 
 const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
