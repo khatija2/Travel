@@ -1,4 +1,6 @@
+'use client'
 import React from 'react'
+import { useState } from "react";
 import type {
     NextPage,
     GetStaticPaths,
@@ -19,6 +21,7 @@ import Itinerary from "~/components/profile/Itinerary"
 import { api } from "../../utils/api";
 import { ssgHelper } from "~/server/api/ssgHelper";
 import { LoadingPage } from "~/components/Loading";
+import ContactModal from "~/components/modals/ContactModal";
 
 
 type profileProps = {
@@ -40,6 +43,8 @@ type profileProps = {
 
 const Profile: NextPage<profileProps> = ({id}) => {
 
+    const [showContactModal, setShowContactModal] = useState(false);
+
     const { data: profile, isLoading } = api.profiles.getById.useQuery({ id });
 
 
@@ -50,9 +55,20 @@ const Profile: NextPage<profileProps> = ({id}) => {
       }
 
 
+     
+     const handleContactModal = () => {
+        setShowContactModal(true)
+      } 
+
+     const closeContactModal = () => {
+        setShowContactModal(false)
+      }
+
+
   return (
  
     <div className="p-4 lg:p-8 2xl:p-12 text-slate-800 bg-gray-100">
+        {showContactModal && (<ContactModal closeContactModal={closeContactModal} title={profile.title}/>)}
         <div key={profile.id}>
         <div className="flex flex-col sm:flex-row border bg-white">
             <div className="w-full sm:w-2/5 flex flex-col">
@@ -61,7 +77,7 @@ const Profile: NextPage<profileProps> = ({id}) => {
                 </div>
                 <Price price_excl={profile.price_excl} price_incl={profile.price_incl}/>
                 <div className="sm:flex justify-center mx-4 mb-2 lg:mb-6 hidden">
-                    <button className="w-3/4 py-3 text-white font-semibold bg-sky-800 rounded-lg">Enquire Now</button>
+                    <button onClick={() => handleContactModal()} className="w-3/4 py-3 text-white font-semibold bg-sky-800 rounded-lg">Enquire Now</button>
                 </div> 
             </div>
             <div className="flex flex-col p-2 2xl:pl-9 2xl:pr-6 sm:pl-3.5 sm:pr-2 sm:w-3/5 w-full bg-gray-50">
@@ -116,7 +132,7 @@ const Profile: NextPage<profileProps> = ({id}) => {
                 </div>             
             </div>
         </div>
-        <PriceSmall price_excl={profile.price_excl} price_incl={profile.price_incl}/>
+        <PriceSmall price_excl={profile.price_excl} price_incl={profile.price_incl} handleContactModal={handleContactModal}/>
         </div>
         <Itinerary profileId={profile.id} />
     </div>

@@ -3,9 +3,10 @@ import React from 'react'
 type priceProps = {
     price_excl: number | null
     price_incl: number | null
+    handleContactModal: () => void
 }
 
-const PriceSmall: React.FC<priceProps> = ({price_excl, price_incl}) => {
+const PriceSmall: React.FC<priceProps> = ({price_excl, price_incl, handleContactModal}) => {
   return (
     <div className="flex flex-col mt-4 py-2 border border-gray-400 sm:hidden">
     <div className="flex flex-col justify-center items-center gap-2">
@@ -27,7 +28,7 @@ const PriceSmall: React.FC<priceProps> = ({price_excl, price_incl}) => {
             </div>
     </div>
     <div className="flex justify-center items-center mt-4">
-        <button className="w-3/4 py-3 text-white font-semibold bg-sky-800 rounded-lg">Enquire Now</button>
+        <button onClick={handleContactModal} type="button"  className="w-3/4 py-3 text-white font-semibold bg-sky-800 rounded-lg">Enquire Now</button>
     </div> 
 </div>
   )

@@ -2,9 +2,16 @@ import React from 'react'
 import { useState } from "react"
 import Calendar from "~/components/modals/Calendar"
 import {RiArrowDownSLine} from 'react-icons/ri'
+import {RiCloseFill} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
 
-const Contact = () => {
+type ContactProps = {
+    closeContactModal: () => void;
+    title: string
+}
+
+
+const ContactModal: React.FC<ContactProps> = ({closeContactModal, title}) => {
 
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [selectedReturn, setSelectedReturn] = useState<string | null>(null);
@@ -17,11 +24,14 @@ const Contact = () => {
     const types = ['Holiday Packages', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
   
     const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+    const ref2 = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
-    useOnClickOutside(ref, () => closeTypeModal());
+    useOnClickOutside(ref, () => closeTypeModal()); 
+
+    useOnClickOutside(ref2, () => closeContactModal()); 
   
 
-     const handleCalendarModal = () => {
+  const handleCalendarModal = () => {
     setShowCalendarModal(true)
   }
 
@@ -62,45 +72,25 @@ const Contact = () => {
 
 
   return (
-<>
-
-<div className="flex flex-col bg-sky-100 p-8 sm:p-16 lg:p-20">
-    <div className="font-bold text-2xl md:text-3xl lg:text-4xl pb-6 sm:pb-10 text-sky-900">Contact Us</div>
-    <div className="font-md whitespace-pre-wrap mb-6">
-    Simply complete the form below with your request and we will get back to you shortly.  
-    </div>
-    <div className="font-md whitespace-pre-wrap mb-6">
-    Alternatively, send us an email or give us a call:  
-    </div>
-    <div className="font-md mb-6 sm:mb-10">
-        <ul className="pb-6">
-            <li><strong>Telephone:</strong> +27 XX XXX XXXX</li>
-            <li><strong>Email:</strong>  XXXX@travel.co.za</li>
-        </ul>
-               
-        <h1><strong>Office hours:</strong></h1>
-        <table className="mt-2 ">
-            <tbody>
-                <tr>
-                    <td>Mon-Fri:</td>
-                    <td className="pl-4">8am-5pm</td>
-                </tr>
-                <tr>
-                <td>Saturday:</td>
-                <td className="pl-4">9am-2pm</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-<div className="font-md bg-white rounded-lg w-full sm:p-4 lg:p-6 2xl:p-10">
-    <h1 className="font-bold my-4 md:my-6 md:mb-8 text-lg lg:text-2xl pl-2">Enquiry Form</h1>
-    <div className="px-5 sm:p-0">
-    {showCalendarModal && (
-      <Calendar closeCalendarModal={closeCalendarModal} onDepartureSelected={handleDepartureSelected} onReturnSelected={handleReturnSelected} onLegSelected={handleLegSelected}  onRoundSelected={handleRoundSelected} selectedDeparture={selectedDeparture} selectedReturn={selectedReturn} selectedLeg={selectedLeg} selectedRound={selectedRound}/>
-      )}
+    <>
+    <div ref={ref2} className="absolute z-40 top-50 sm:top-0 left-0 px-4 sm:px-10 lg:px-20 2xl:px-40 right-0 translate-y-24 sm:translate-y-44">
+     <div className="flex flex-col justify-center self-center w-full p-1 rounded-lg shadow-2xl border border-gray-200 bg-white">
+      <div className="flex flex-col justify-center bg-sky-100 p-6 w-full sm:p-4 lg:px-10 lg:py-6">
+      <div className="flex items-center justify-end w-full">
+       <button type="button" onClick={closeContactModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
+        <RiCloseFill/>
+       </button>
       </div>
+      <div className="font-bold text-2xl md:text-3xl lg:text-4xl pb-6 sm:pb-8 text-black text-center underline">Enquiry</div>   
+       <div className="font-bold text-xl md:text-2xl lg:text-3xl pb-6 sm:pb-4 text-sky-900 text-center">{title}</div>   
+       <div className="font-md bg-white rounded-lg w-full p-2 pt-4 sm:p-4 lg:p-6 2xl:p-10">
+        <div className="px-4 sm:p-0 right-0 left-0">
+        {showCalendarModal && (
+        <Calendar closeCalendarModal={closeCalendarModal} onDepartureSelected={handleDepartureSelected} onReturnSelected={handleReturnSelected} onLegSelected={handleLegSelected}  onRoundSelected={handleRoundSelected} selectedDeparture={selectedDeparture} selectedReturn={selectedReturn} selectedLeg={selectedLeg} selectedRound={selectedRound}/>
+        )}
+        </div>
     <form  >
-    <div className="flex flex-col w-full justify-center items-center px-2 gap-4 sm:grid grid-cols-2">
+        <div className="flex flex-col w-full justify-center items-center px-2 gap-y-4 sm:gap-6 sm:grid grid-cols-2">
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Your name</label>
             <input type="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. John Doe" required/>
@@ -112,7 +102,7 @@ const Contact = () => {
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Email address</label>
             <input type="email" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. name@travel.com" required/>
-        </div> 
+        </div>  
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Destination</label>
             <input className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="Anywhere?"/>
@@ -150,8 +140,10 @@ const Contact = () => {
     </form>
 </div>  
 </div>
-</>
+     </div>
+    </div>
+    </>
   )
 }
 
-export default Contact
+export default ContactModal
