@@ -16,7 +16,7 @@ type resultsProps = {
   nights: string;
   image: string;
   id: string;
-  rating: Decimal | null;
+  rating: number | null;
   price_excl: number | null;
   price_incl: number | null
 }[]

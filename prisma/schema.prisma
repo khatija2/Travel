@@ -21,7 +21,7 @@ model Profile {
   info          String[]    @db.VarChar
   image         String
   id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  rating        Decimal?
+  rating        Float?      @db.Real
   trip_index    Trip[]
   start_date    DateTime?   @db.Date
   end_date      DateTime?   @db.Date

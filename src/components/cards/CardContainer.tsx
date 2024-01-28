@@ -20,30 +20,79 @@ type cardProps = {
         price_incl: number | null;
         image: string;
         id: string;
-        rating: Decimal | null;
+        rating: number | null;
 }
 
 
 const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl, price_incl, image, id, rating}) => {
 
+
+    const renderStars: (rating: number) => React.ReactNode = (rating: number) => {
+ 
+        const wholeStars = Math.floor(rating)
+
+        
+        const starsArray = [];
+    
+        for (let i=1; i <= wholeStars; i++) {
+          
+          if (wholeStars) {
+            starsArray.push(
+                <IoMdStar key={i} color="#facc15"/>
+            );
+          }
+        }
+  
+        const halfStar = rating - wholeStars >= 0.25 && rating - wholeStars <= 0.75
+
+        if (halfStar) {
+            starsArray.push(
+              <IoMdStarHalf  key="half" color="#facc15" />
+            );
+          }
+
+
+        const remainingStars = 5 - starsArray.length;
+
+        for (let i=1; i <= remainingStars; i++) {
+              starsArray.push(
+                <IoMdStarOutline key={`outline-${i}`} color="#facc15"/>
+              );
+          }
+
+          return starsArray
+    }
+
+    const renderOutline = () => {
+
+        const starOutlineArray = []
+
+        for (let i=1; i <= 5; i++) {
+             starOutlineArray.push(
+                <IoMdStarOutline key={`nofilloutline-${i}`} color="#facc15"/>
+              )
+          }
+          return starOutlineArray
+    }
+   
+
+
+
   return (
  
 <>
-    <div key={id}  className="max-w-sm bg-white border border-gray-700 rounded-lg shadow flex-col px-3 pt-3 flex mb-4 sm:mb-0 z-0">
-        <div className="flex px-2">
-            <Image src={image} alt="" width={400} height={50} className="rounded-lg" />
+    <div key={id}  className="w-60 h-100 xl:w-80 xl:h-120 bg-white border border-gray-700 rounded-lg shadow  px-3 pt-3  mb-4 sm:mb-0 z-0">
+        <div className="px-2">
+            <Image src={image} alt="destination" width={500} height={50} className="rounded-lg"/>
         </div>
-            <div className="flex flex-col justify-between py-2">
-            <div className="flex items-center lg:text-xl">
-                <IoMdStar color="#facc15"/>
-                <IoMdStar color="#facc15"/>
-                <IoMdStar color="#facc15"/>
-                <IoMdStarHalf color="#facc15" />
-                <IoMdStarOutline color="#facc15" />
+          <div className="flex flex-col justify-between py-2">
+            <div className="flex items-center gap-0.5">
+               {rating !== null ? renderStars(rating) : renderOutline()}
+               <span className="text-xs">{rating}</span>
             </div>
-            <div className="align-center h-20  lg:text-xl  py-1 font-bold">
+            <div className=" h-20 xl:text-xl  py-1 font-bold">
                 <h1 className="line-clamp-3">{title}</h1>
-                </div>
+            </div>
             <div className="flex flex-row items-center gap-3 text-xs lg:text-sm text-gray-500 py-2">
                 <div className="flex flex-row items-center gap-1"><MdNightlight/><p>{nights}</p></div>
                 <div className={(cities?.length !== 0 ) ? "flex flex-row items-center gap-1" : "flex flex-row items-center gap-1 opacity-0"} key={cities?.length}><SlLocationPin/><p>{cities?.length} cities</p></div>
@@ -51,11 +100,11 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
             <div className="flex flex-row justify-between items-end" >
                     <div className={(price_excl || price_incl) ? "opacity-100" : "opacity-0"}>
                         <p>From</p>
-                    <h1 className="font-bold lg:text-2xl">R {price_excl || price_incl}</h1>
+                    <h1 className="font-bold xl:text-2xl">R {price_excl || price_incl}</h1>
                     </div>
                 <div>
                      <Link href={`/profiles/${id}`}>
-                    <div  className="bg-blue-700 hover:bg-blue-800 text-white text-sm lg:text-lg p-2 lg:p-2.5 rounded-lg">View Deal</div>
+                    <div  className="bg-blue-700 hover:bg-blue-800 text-white text-sm xl:text-lg p-2 lg:p-2.5 rounded-lg">View Deal</div>
                     </Link>
                 </div>
 
