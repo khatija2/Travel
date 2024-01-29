@@ -1,8 +1,10 @@
-import React from 'react'
+'use client'
+import React, { FormEvent } from 'react'
 import { useState } from "react"
 import Calendar from "~/components/modals/Calendar"
 import {RiArrowDownSLine} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
+import { error } from "console"
 
 const Contact = () => {
 
@@ -13,6 +15,12 @@ const Contact = () => {
     const [selectedDeparture, setSelectedDeparture] = useState<string | null>(null);
     const [showTypeModal, setShowTypeModal] = useState(false);
     const [selectedType, setSelectedType] = useState<string | null>(null);
+    
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [destination, setDestination] = useState('');
+    const [other, setOther] = useState('')
 
     const types = ['Holiday Packages', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
   
@@ -61,6 +69,22 @@ const Contact = () => {
   };
 
 
+const onSubmit = async (e: FormEvent) => {
+  e.preventDefault()
+  try {
+    const res = await fetch('/api/contactForm', {
+      method: 'POST',
+      body: JSON.stringify({
+        name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other
+      }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+  } catch(error:any) {console.log('err', error)}
+}
+
+
   return (
 <>
 
@@ -99,23 +123,27 @@ const Contact = () => {
       <Calendar closeCalendarModal={closeCalendarModal} onDepartureSelected={handleDepartureSelected} onReturnSelected={handleReturnSelected} onLegSelected={handleLegSelected}  onRoundSelected={handleRoundSelected} selectedDeparture={selectedDeparture} selectedReturn={selectedReturn} selectedLeg={selectedLeg} selectedRound={selectedRound}/>
       )}
       </div>
-    <form  >
+    <form onSubmit={onSubmit} >
     <div className="flex flex-col w-full justify-center items-center px-2 gap-4 sm:grid grid-cols-2">
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Your name</label>
-            <input type="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. John Doe" required/>
+            <input type="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. John Doe" required value={name}
+            onChange={(e) => setName(e.target.value)}/>
         </div>
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Phone number</label>
-            <input type="tel" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"/>
+            <input type="tel" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="000-000-0000"  value={phone}
+             onChange={(e) => setPhone(e.target.value)}/>
         </div>
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Email address</label>
-            <input type="email" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. name@travel.com" required/>
+            <input type="email" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. name@travel.com" required value={email}
+             onChange={(e) => setEmail(e.target.value)}/>
         </div> 
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Destination</label>
-            <input className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="Anywhere?"/>
+            <input className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="Anywhere?" value={destination}
+             onChange={(e) => setDestination(e.target.value)}/>
         </div> 
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Travel Dates</label>
@@ -141,7 +169,8 @@ const Contact = () => {
         </div>
             <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Other information</label>
-            <textarea className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full h-40 p-2.5" placeholder="Type your requests here..."/>
+            <textarea className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full h-40 p-2.5" placeholder="Type your requests here..." value={other}
+             onChange={(e) => setOther(e.target.value)}/>
             </div> 
         <div className="flex items-center justify-center mb-4 sm:mb-0">
              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm sm:text-lg w-full sm:w-1/3 px-5 py-2.5 text-center">Submit</button>
