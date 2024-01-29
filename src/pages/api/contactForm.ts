@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {transporter, mailOptions} from "../../../service/nodemailer"
 import { NextResponse } from "next/server"
-import { render } from '@react-email/render';
 import Email from "~/components/emails/Email";
-
 import { Resend } from 'resend';
 
  
