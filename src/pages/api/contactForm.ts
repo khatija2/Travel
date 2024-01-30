@@ -8,12 +8,23 @@ type ResponseData = {
   message: string
 }
 
+type ContactProps = {
+  name: string;
+   phone: string; 
+   email: string; 
+   destination: string;
+   selectedDeparture: string;
+   selectedReturn: string
+   selectedType: string; 
+   other: string
+}
+
 const resend = new Resend(process.env.EMAIL_PASS);
 
 
  
 const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
-    const {name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other} = req.body
+    const {name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other}: ContactProps  = req.body
     try {
         await resend.emails.send({
         from: 'onboarding@resend.dev',
@@ -23,7 +34,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) 
       })
       res.status(200).json({ message: "success" })
     } catch (error: any) {
-        console.log(error) 
         return  NextResponse.json({ message: error.message })
     }
 

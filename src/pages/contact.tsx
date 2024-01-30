@@ -2,9 +2,9 @@
 import React, { FormEvent } from 'react'
 import { useState } from "react"
 import Calendar from "~/components/modals/Calendar"
-import {RiArrowDownSLine} from 'react-icons/ri'
+import {RiArrowDownSLine} from "react-icons/ri"
 import useOnClickOutside from "~/hooks/closeModal"
-import { error } from "console"
+import toast from "react-hot-toast"
 
 const Contact = () => {
 
@@ -16,11 +16,11 @@ const Contact = () => {
     const [showTypeModal, setShowTypeModal] = useState(false);
     const [selectedType, setSelectedType] = useState<string | null>(null);
     
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [destination, setDestination] = useState('');
-    const [other, setOther] = useState('')
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
+    const [destination, setDestination] = useState("");
+    const [other, setOther] = useState("");
 
     const types = ['Holiday Packages', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
   
@@ -81,7 +81,22 @@ const onSubmit = async (e: FormEvent) => {
         'content-type': 'application/json'
       }
     })
-  } catch(error:any) {console.log('err', error)}
+    if(res.status === 200) {
+      setName("")
+      setPhone("")
+      setEmail("")
+      setDestination("")
+      setOther("")
+      setSelectedDeparture(null)
+      setSelectedReturn(null)
+      setSelectedType(null)
+
+      toast.success("Thank you for contacting us, your enquiry was sent successfully!")
+    }
+  } catch(error:unknown) {
+    console.log('err', error)
+    toast.error("There was a problem sending your enquiry! Please try again or send us an email")
+  }
 }
 
 

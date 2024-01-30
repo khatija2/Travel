@@ -5,13 +5,13 @@ import {RiArrowDownSLine} from 'react-icons/ri'
 import {RiCloseFill} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
 
-type ContactProps = {
+type ContactModalProps = {
     closeContactModal: () => void;
     title: string
 }
 
 
-const ContactModal: React.FC<ContactProps> = ({closeContactModal, title}) => {
+const ContactModal: React.FC<ContactModalProps> = ({closeContactModal, title}) => {
 
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [selectedReturn, setSelectedReturn] = useState<string | null>(null);
