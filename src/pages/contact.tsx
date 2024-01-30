@@ -69,10 +69,9 @@ const Contact = () => {
   };
 
 
-const onSubmit = async (e: FormEvent) => {
+const onSubmit = (e: FormEvent) => {
   e.preventDefault()
-  try {
-    const res = await fetch('/api/contactForm', {
+   fetch('/api/contactForm', {
       method: 'POST',
       body: JSON.stringify({
         name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other
@@ -81,7 +80,7 @@ const onSubmit = async (e: FormEvent) => {
         'content-type': 'application/json'
       }
     })
-    if(res.status === 200) {
+    .then(res => { if (res.status === 200) {
       setName("")
       setPhone("")
       setEmail("")
@@ -91,18 +90,20 @@ const onSubmit = async (e: FormEvent) => {
       setSelectedReturn(null)
       setSelectedType(null)
 
-      toast.success("Thank you for contacting us, your enquiry was sent successfully!")
-    }
-  } catch(error:unknown) {
-    console.log('err', error)
-    toast.error("There was a problem sending your enquiry! Please try again or send us an email")
-  }
-}
+      toast.success("Thank you for contacting us, your enquiry was sent successfully!", {duration: 8000})
+     } else {
+      throw new Error('Network response was not ok.');
+     }
+    })
+    .catch(error => {
+    console.log('Error:', error);
+    toast.error("There was a problem sending your enquiry! Please try again or send us an email", {duration: 8000})
+    })
+ }
 
 
   return (
 <>
-
 <div className="flex flex-col bg-sky-100 p-8 sm:p-16 lg:p-20">
     <div className="font-bold text-2xl md:text-3xl lg:text-4xl pb-6 sm:pb-10 text-sky-900">Contact Us</div>
     <div className="font-md whitespace-pre-wrap mb-6">

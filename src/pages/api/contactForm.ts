@@ -23,7 +23,7 @@ const resend = new Resend(process.env.EMAIL_PASS);
 
 
  
-const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
+export default async function handler (req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     const {name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other}: ContactProps  = req.body
     try {
         await resend.emails.send({
@@ -33,10 +33,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) 
         react: Email({name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other})
       })
       res.status(200).json({ message: "success" })
-    } catch (error: any) {
-        return  NextResponse.json({ message: error.message })
+    } catch (error: unknown) {
+        return  NextResponse.json({ message: error })
     }
 
 }
 
-export default handler;
