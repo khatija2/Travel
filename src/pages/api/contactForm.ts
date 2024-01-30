@@ -14,16 +14,27 @@ type ContactProps = {
    email: string; 
    destination: string;
    selectedDeparture: string;
-   selectedReturn: string
-   selectedType: string; 
+   selectedReturn: string;
+   selectedType: string;
    other: string
 }
 
 const resend = new Resend(process.env.EMAIL_PASS);
 
-
+interface ExtendedNextApiRequest extends NextApiRequest {
+  body: {
+    name: string;
+    phone: string; 
+    email: string; 
+    destination: string;
+    selectedDeparture: string;
+    selectedReturn: string;
+    selectedType: string;
+    other: string
+  };
+}
  
-export default async function handler (req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+export default async function handler (req: ExtendedNextApiRequest, res: NextApiResponse<ResponseData>) {
     const {name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other}: ContactProps  = req.body
     try {
         await resend.emails.send({
