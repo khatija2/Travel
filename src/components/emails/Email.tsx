@@ -16,14 +16,15 @@ type EmailProps = {
     email: string; 
     destination: string;
     selectedDeparture: string;
-    selectedReturn: string
+    selectedReturn: string;
     selectedType: string; 
-    other: string
+    other: string;
+    title: string;
 }
 
 
 
-const Email: React.FC<EmailProps> = ({name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other}) => {
+const Email: React.FC<EmailProps> = ({name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other, title}) => {
   return (
     <Html>
       <Head/>
@@ -33,6 +34,7 @@ const Email: React.FC<EmailProps> = ({name, phone, email, destination, selectedD
           <Heading>New Enquiry</Heading>
           </Container>
           <Container className="mx-auto p-4 text-[28px] bg-blue-50">
+          <Row className="border-t-2 border-solid border-gray px-2"><Text key="name"><strong>Package: </strong> {title}</Text></Row>
           <Row className="border-t-2 border-solid border-gray px-2"><Text key="name"><strong>Name: </strong> {name}</Text></Row>
           <Row className="border-t-2 border-solid border-gray px-2" ><Text key="phone"><strong>Telephone Number:</strong> {phone}</Text></Row>
           <Row className="border-t-2 border-solid border-gray px-2"><Text  key="email" ><strong>Email:</strong> {email}</Text></Row>

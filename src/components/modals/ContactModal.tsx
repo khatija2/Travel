@@ -1,9 +1,11 @@
-import React from 'react'
-import { useState } from "react"
+'use client'
+import React, {FormEvent} from 'react'
+import {useState} from "react"
 import Calendar from "~/components/modals/Calendar"
 import {RiArrowDownSLine} from 'react-icons/ri'
 import {RiCloseFill} from 'react-icons/ri'
 import useOnClickOutside from "~/hooks/closeModal"
+import toast from "react-hot-toast"
 
 type ContactModalProps = {
     closeContactModal: () => void;
@@ -20,6 +22,14 @@ const ContactModal: React.FC<ContactModalProps> = ({closeContactModal, title}) =
     const [selectedDeparture, setSelectedDeparture] = useState<string | null>(null);
     const [showTypeModal, setShowTypeModal] = useState(false);
     const [selectedType, setSelectedType] = useState<string | null>(null);
+    const [validName, setValidName] = useState("")
+    const [validEmail, setValidEmail] = useState("")
+    
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
+    const [destination, setDestination] = useState("");
+    const [other, setOther] = useState("");
 
     const types = ['Holiday Packages', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
   
@@ -70,6 +80,64 @@ const ContactModal: React.FC<ContactModalProps> = ({closeContactModal, title}) =
     closeTypeModal()
   };
 
+  const handleValidName = (name:string) => {
+    if (name !== "") {
+      setValidName(name)
+    } else {
+      setValidName("invalid")
+    }
+  }
+
+  const handleValidEmail = (email:string) => {
+    if (email !== "") {
+      setValidEmail(email)
+    } else {
+      setValidEmail("invalid")
+    }
+  }
+
+
+
+const onSubmit = (e: FormEvent) => {
+  e.preventDefault()
+  handleValidName(name)
+  handleValidEmail(email)
+  if (name !== "" && email !== "") { 
+   fetch('/api/contactForm', {
+      method: 'POST',
+      body: JSON.stringify({
+        name, phone, email, destination, selectedDeparture, selectedReturn, selectedType, other, title
+      }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+    .then(res => { if (res.status === 200) {
+      setName("")
+      setPhone("")
+      setEmail("")
+      setDestination("")
+      setOther("")
+      setSelectedDeparture(null)
+      setSelectedReturn(null)
+      setSelectedType(null)
+      setValidName("")
+      setValidEmail("")
+
+      toast.success("Thank you for contacting us, your enquiry was sent successfully!", {duration: 8000})
+     } else {
+      throw new Error('Network response was not ok.');
+     }
+    })
+    .catch(error => {
+    console.log('Error:', error);
+    toast.error("There was a problem sending your enquiry! Please try again or send us an email", {duration: 8000})
+    })
+  }
+  else {toast.error("Please ensure that the required fields are completed!", {duration: 8000})}
+ }
+
+
 
   return (
     <>
@@ -89,23 +157,27 @@ const ContactModal: React.FC<ContactModalProps> = ({closeContactModal, title}) =
         <Calendar closeCalendarModal={closeCalendarModal} onDepartureSelected={handleDepartureSelected} onReturnSelected={handleReturnSelected} onLegSelected={handleLegSelected}  onRoundSelected={handleRoundSelected} selectedDeparture={selectedDeparture} selectedReturn={selectedReturn} selectedLeg={selectedLeg} selectedRound={selectedRound}/>
         )}
         </div>
-    <form  >
-        <div className="flex flex-col w-full justify-center items-center px-2 gap-y-4 sm:gap-6 sm:grid grid-cols-2">
+        <form onSubmit={onSubmit} >
+    <div className="flex flex-col w-full justify-center items-center px-2 gap-4 sm:grid grid-cols-2">
         <div className="w-full">
-            <label  className="flex mb-2 text-sm font-medium text-gray-900">Your name</label>
-            <input type="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. John Doe" required/>
+            <label  className="flex mb-2 text-sm font-medium text-gray-900">Your name <span className="text-red-500 px-1">*</span><span className={validName === "invalid" ? "text-red-400 px-1 justify-end" : "hidden"}>required</span></label>
+            <input type="text" className={`border text-gray-900 text-sm rounded-lg flex w-full p-2.5 focus:outline-blue-400 ${(validName === "invalid") ? "border-red-500" : "border-gray-300"}`} placeholder="e.g. John Doe"  maxLength={50} value={name}
+            onChange={(e) => setName(e.target.value)}/>
         </div>
         <div className="w-full">
             <label  className="flex mb-2 text-sm font-medium text-gray-900">Phone number</label>
-            <input type="tel" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"/>
+            <input type="text" className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5 focus:outline-blue-400" placeholder="0000000000"  pattern="[0-9]" maxLength={14} value={phone}
+             onChange={(e) => setPhone(e.target.value)}/>
         </div>
         <div className="w-full">
-            <label className="flex mb-2 text-sm font-medium text-gray-900">Email address</label>
-            <input type="email" className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="e.g. name@travel.com" required/>
-        </div>  
+            <label className="flex mb-2 text-sm font-medium text-gray-900">Email address <span className="text-red-500 px-1">*</span><span className={validEmail === "invalid" ? "text-red-400 px-1 justify-end" : "hidden"}>required</span></label>
+            <input type="email" className={`border text-gray-900 text-sm rounded-lg flex w-full p-2.5 focus:outline-blue-400 ${(validEmail === "invalid") ? "border-red-500" : "border-gray-300"}`} placeholder="e.g. name@travel.com" maxLength={50} pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" value={email}
+             onChange={(e) => setEmail(e.target.value)}/>
+        </div> 
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Destination</label>
-            <input className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5" placeholder="Anywhere?"/>
+            <input className=" border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full p-2.5 focus:outline-blue-400" placeholder="Anywhere?" maxLength={50} value={destination}
+             onChange={(e) => setDestination(e.target.value)}/>
         </div> 
         <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Travel Dates</label>
@@ -131,10 +203,11 @@ const ContactModal: React.FC<ContactModalProps> = ({closeContactModal, title}) =
         </div>
             <div className="w-full">
             <label className="flex mb-2 text-sm font-medium text-gray-900">Other information</label>
-            <textarea className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full h-40 p-2.5" placeholder="Type your requests here..."/>
+            <textarea className="border border-gray-300 text-gray-900 text-sm rounded-lg flex w-full h-40 p-2.5 focus:outline-blue-400" placeholder="Type your requests here..." maxLength={500} value={other}
+             onChange={(e) => setOther(e.target.value)}/>
             </div> 
         <div className="flex items-center justify-center mb-4 sm:mb-0">
-             <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm sm:text-lg w-full sm:w-1/3 px-5 py-2.5 text-center">Submit</button>
+             <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm sm:text-lg w-full sm:w-1/3 px-5 py-2.5 place-content-center">Submit</button>
         </div>
     </div> 
     </form>

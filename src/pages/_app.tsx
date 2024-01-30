@@ -17,10 +17,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <Toaster
        containerStyle={{
         top: 140,
+        left: 40
       }}
       toastOptions={{
         style: {
-          padding: '20px'
+          padding: '20px',
+          borderRadius: '10px',
+          gap: '6px'
         }}}/>
       <PageLayout>
       <Component {...pageProps} />
