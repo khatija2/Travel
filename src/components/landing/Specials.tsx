@@ -86,12 +86,12 @@ const Specials: NextPage = () => {
 
 
   return (
-    <div className="w-full h-200 px-4 sm:px-20 xl:px-30 sm:pt-2 sm:pb-6">
+    <div className="w-full h-200 px-4 sm:px-20 xl:px-30 sm:pt-2 sm:pb-6 transition-none">
       <div className="flex flex-row justify-center sm:justify-between overflow-auto">
       <div>
           <ButtonPrev onClick={handlePrev} disabled={isFirstSlide}/>
         </div>
-        <div className="flex flex-none sm:gap-2 xl:gap-6">
+        <div className="sm:flex flex-none sm:gap-2 xl:gap-6 sm:transition sm:ease-in-out">
           {renderCards()}
         </div>
      <div>
