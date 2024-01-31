@@ -83,10 +83,10 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
  
 <>
     <div key={id}  className="w-60 h-100 xl:w-80 xl:h-120 bg-white border border-gray-700 rounded-lg shadow  px-3 pt-3  mb-4 sm:mb-0 z-0">
-        <div className="px-2 h-57 min-w-full">
+        <div className="px-2">
             <Image src={image} alt="destination" width={500} height={50} className="rounded-lg"/>
         </div>
-        <div className="h-43 sm:h-full">
+        <div className="h-50 sm:h-full">
           <div className="flex flex-col justify-between py-2">
             <div className="flex items-end gap-0.5">
                {rating !== null ? renderStars(rating) : renderOutline()}

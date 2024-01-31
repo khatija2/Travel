@@ -14,9 +14,11 @@ import PageSearch from "../search-bars/PageSearch"
 const Landing: NextPage = () => {
   return (
    <div className="font-inter">
-    <div className=" bg-mauritiusBanner z-0 flex flex-col items-center justify-center bg-cover bg-center w-full h-1/2">
+    <div className="bg-mauritiusBanner bg-cover h-1/2 w-full">
+    <div className="z-0 flex flex-col items-center justify-center bg-center h-full w-full">
       <PageSearch category="Destination" category2="Travel category" landing={"landing"} />
       <Specials/>
+    </div>
     </div>
     <Popular/>  
     <div className="relative w-full flex items-center justify-center">
