@@ -42,7 +42,7 @@ const Newsletter: NextPage = () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-center mx-2 sm:mx-8 sm:my-8 p-2 border border-gray-200 rounded-lg bg-sky-50">
+    <div className="flex flex-col items-center justify-center mx-2 sm:mx-8 sm:my-8 p-2 border border-gray-200 rounded-lg bg-sky-100">
       <h1 className="font-bold text-center">Want to keep up with our latest deals?</h1>
       <h2>Sign up for our newsletter!</h2>
       <div className="flex flex-row justify-center gap-2 py-2 w-full">

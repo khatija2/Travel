@@ -193,7 +193,6 @@ const onSubmit = (e: FormEvent) => {
             <div className="border border-gray-300 text-sm rounded-lg flex justify-between text-gray-900 items-center w-full p-2.5" onClick={() => handleCalendarModal()}>
                 <div>{(selectedDeparture !== null && selectedReturn === null) ? selectedDeparture : (selectedDeparture !== null && selectedReturn !== null) ? `${selectedDeparture} - ${selectedReturn}` : "Anytime"}</div>
                 <span className="sr-only">Click to open calendar</span>
-       
             </div>
         </div> 
         <div className="w-full">
@@ -205,6 +204,7 @@ const onSubmit = (e: FormEvent) => {
             {types.map((item, index) => ( 
         <div className="px-3 pb-1 hover:bg-gray-100 cursor-pointer" key={index} onClick={() => handleItemClick(item)}>
            {item}
+           <span className="sr-only">select trip category</span>
         </div>
         ))}
             </div>

@@ -23,7 +23,7 @@ const Chat: NextPage<chatProps>  = ({closeChatModal}) => {
         <div className="z-80 fixed bottom-0 right-0 sm:-right-4 lg:-right-5 sm:translate-x-24  ">
             <div ref={ref} className="border-black sm:w-3/4 bg-white rounded-lg px-2 pt-2 pb-4 shadow-2xl m-2" >
             <div className="flex justify-end">
-                <button type="button" onClick={closeChatModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:p-1">
+                <button type="button" aria-label="close modal" onClick={closeChatModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:p-1">
                 <RiCloseFill/>
                 </button>
                 </div>

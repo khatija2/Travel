@@ -12,6 +12,8 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Travel app</title>
+        <meta name="description" content="Travel agency web app"/>
+        <link rel="icon" href="/images/t-flag.jpg" />
       </Head>
      <Landing/>
       

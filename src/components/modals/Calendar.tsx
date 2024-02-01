@@ -181,7 +181,7 @@ const handleDoneClick = () => {
     <div className="absolute z-50 top-50 lg:w-4/5 -translate-x-6 sm:translate-x-0 translate-y-24 sm:translate-y-44 flex justify-center">
         <div ref={ref} className="flex flex-col items-center justify-center w-full sm:w-9/10 p-1 rounded-lg shadow-2xl border border-gray-200 bg-white 2xl:w-1/2">
             <div className="flex items-center justify-start w-full">
-                <button type="button" onClick={closeCalendarModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
+                <button type="button"  aria-label="close modal" onClick={closeCalendarModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
                 <RiCloseFill/>
                 </button>
             </div>
@@ -377,7 +377,7 @@ const handleDoneClick = () => {
             </div>
         <div className="flex items-end justify-end w-full p-3 sm:pb-4 sm:pr-6">
             <div className="underline mr-8 hover:text-blue-700 cursor-pointer" onClick={() => handleClear()}>Clear</div>
-       <button type="button" className="hover:bg-blue-900 rounded-lg text-white text-sm bg-blue-700 py-2 px-3" onClick={() => handleDoneClick()}>
+       <button type="button"  aria-label="Submit selected dates" className="hover:bg-blue-900 rounded-lg text-white text-sm bg-blue-700 py-2 px-3" onClick={() => handleDoneClick()}>
         Done
      </button>
      </div>

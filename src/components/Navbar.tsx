@@ -40,8 +40,8 @@ export default function Navbar() {
       <ul className="font-medium text-gray-900 flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 md:text-lg">
         <li>
          <div className="hidden items-center gap-2 md:flex">
-          <span className="hover:text-sky-700"><Link href=""><AiOutlineFacebook size={25}/></Link></span>
-          <span className="hover:text-sky-700"><Link href=""><AiOutlineInstagram size={25}/></Link></span>
+          <span className="hover:text-sky-700" aria-label="Facebook link"><Link href=""><AiOutlineFacebook size={25}/></Link></span>
+          <span className="hover:text-sky-700" aria-label="Instagram link"><Link href=""><AiOutlineInstagram size={25}/></Link></span>
          </div>
         </li>
         <li>

@@ -7,7 +7,7 @@ import {AiOutlineInstagram} from 'react-icons/ai'
 const Footer = () => {
   return (
     
-<footer className="bg-gray-100 mt-4">
+<footer className="bg-gray-50 mt-4">
     <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-4 md:mb-0 hidden sm:flex">

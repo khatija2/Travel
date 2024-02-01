@@ -145,7 +145,7 @@ const onSubmit = (e: FormEvent) => {
      <div className="flex flex-col justify-center self-center w-full p-1 rounded-lg shadow-2xl border border-gray-200 bg-white">
       <div className="flex flex-col justify-center bg-sky-100 p-6 w-full sm:p-4 lg:px-10 lg:py-6">
       <div className="flex items-center justify-end w-full">
-       <button type="button" onClick={closeContactModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
+       <button type="button"  aria-label="close modal" onClick={closeContactModal} className="hover:bg-gray-200 rounded-full hover:text-white text-slate-700 text-xl sm:text-2xl lg:text-3xl sm:p-1">
         <RiCloseFill/>
        </button>
       </div>
@@ -184,7 +184,6 @@ const onSubmit = (e: FormEvent) => {
             <div className="border border-gray-300 text-sm rounded-lg flex justify-between text-gray-900 items-center w-full p-2.5" onClick={() => handleCalendarModal()}>
                 <div>{(selectedDeparture !== null && selectedReturn === null) ? selectedDeparture : (selectedDeparture !== null && selectedReturn !== null) ? `${selectedDeparture} - ${selectedReturn}` : "Anytime"}</div>
                 <span className="sr-only">Click to open calendar</span>
-       
             </div>
         </div> 
         <div className="w-full">
@@ -196,6 +195,7 @@ const onSubmit = (e: FormEvent) => {
             {types.map((item, index) => ( 
         <div className="px-3 pb-1 hover:bg-gray-100 cursor-pointer" key={index} onClick={() => handleItemClick(item)}>
            {item}
+           <span className="sr-only">select trip category</span>
         </div>
         ))}
             </div>
