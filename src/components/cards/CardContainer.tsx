@@ -82,30 +82,26 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
   return (
  
 <>
-    <div key={id}  className="w-60 h-100 xl:w-80 xl:h-120 bg-white border border-gray-700 rounded-lg shadow  px-3 pt-3  mb-4 sm:mb-0 z-0">
-        <div className="px-2">
-            <Image src={image} alt="destination" width={500} height={50} className="rounded-lg"/>
+    <div key={id}  className="h-360 sm:h-380 w-auto bg-white border border-gray-700 rounded-lg shadow  px-3 pt-3  mb-4 sm:mb-0 z-0">
+        <div className="px-2 max-h-180">
+            <Image src={image} alt="destination" width={640} height={480} className="rounded-lg" />
         </div>
-        <div className="h-50 sm:h-full">
-          <div className="flex flex-col justify-between py-2">
+        <div className="flex flex-col justify-between py-2 min-h-180">
             <div className="flex items-end gap-0.5">
                {rating !== null ? renderStars(rating) : renderOutline()}
                <span className="text-xs self-end">{rating}</span>
             </div>
-            <div className=" h-20 xl:text-xl  py-1 font-bold">
+            <div className=" h-20 xl:text-lg  py-1 font-bold">
                 <h1 className="line-clamp-3">{title}</h1>
             </div>
-            <div className="h-8 sm-h-full">
             <div className="flex flex-row items-center gap-3 text-xs lg:text-sm text-gray-500 py-2 min-h-full">
                 <div className="flex flex-row items-center gap-1"><MdNightlight/><p>{nights}</p></div>
                 <div className={(cities?.length !== 0 ) ? "flex flex-row items-center gap-1" : "flex flex-row items-center gap-1 opacity-0"} key={cities?.length}><SlLocationPin/><p>{cities?.length} cities</p></div>
             </div>
-            </div>
-            <div className="h-18 sm:h-full">
             <div className="flex flex-row justify-between items-end min-h-full" >
                     <div className={(price_excl || price_incl) ? "opacity-100" : "opacity-0"}>
                         <p>From</p>
-                    <h1 className="font-bold xl:text-2xl">R {price_excl || price_incl}</h1>
+                    <h1 className="font-bold xl:text-xl">R {price_excl || price_incl}</h1>
                     </div>
                 <div>
                      <Link href={`/profiles/${id}`}>
@@ -113,10 +109,8 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
                     </Link>
                 </div>
             </div>
-            </div>
         </div>
-        </div>
-    </div>
+      </div>
 </>
   )
 }
