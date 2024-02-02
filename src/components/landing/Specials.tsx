@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import CardContainer from "../cards/CardContainer"
 import ButtonPrev from "../buttons/ButtonPrev"
 import ButtonNext from "../buttons/ButtonNext"
+import { LoadingPage } from "~/components/Loading";
 
 
 const Specials: NextPage = () => {
@@ -21,7 +22,7 @@ const Specials: NextPage = () => {
       if (screenWidth <= 576) { 
         setSlideSize(1)
       } 
-      else if (screenWidth <= 912 ) { 
+      else if (screenWidth <= 1025 ) { 
         setSlideSize(2)
       } 
       else {
@@ -39,7 +40,9 @@ const Specials: NextPage = () => {
   }, [])
 
 
-  const { data: specials } = api.specials.getSome.useQuery()
+  const { data: specials, isLoading } = api.specials.getSome.useQuery()
+
+  if (isLoading) return <LoadingPage/>;
    
     if (!specials) {
         return <ErrorPage statusCode={404} />
@@ -90,7 +93,7 @@ const Specials: NextPage = () => {
       <div>
         <ButtonPrev onClick={handlePrev} disabled={isFirstSlide}/>
       </div>
-      <div className="flex flex-row sm:grid sm:grid-rows-1 sm:grid-cols-2 md:grid-cols-3 w-3/4 h-360 sm:h-380 sm:gap-2 lg:gap-4 xl:gap-6">
+      <div className="flex flex-row sm:grid sm:grid-rows-1 sm:grid-cols-2 lg:grid-cols-3 w-3/4 h-360 sm:h-380 sm:gap-2 lg:gap-4 xl:gap-6">
           {renderCards()}
       </div>
       <div>

@@ -6,12 +6,15 @@ import { api } from "../../utils/api";
 import ErrorPage from "next/error";
 import ButtonPrev from "../buttons/ButtonPrev";
 import ButtonNext from "../buttons/ButtonNext";
+import { LoadingPage } from "~/components/Loading";
 
 const Popular: NextPage = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { data: destinations } = api.destinations.getByValue.useQuery();
+  const { data: destinations, isLoading } = api.destinations.getByValue.useQuery();
+
+  if (isLoading) return <LoadingPage/>;
 
     if (!destinations) {
         return <ErrorPage statusCode={404} />;

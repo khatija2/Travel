@@ -1,7 +1,13 @@
 import React from 'react'
+import Head from "next/head"
 
 const Payments = () => {
   return (
+    <>
+    <Head>
+    <title>Payments - Travel</title>
+    <meta name="description" content="Learn more about how we accept payments and our payment policy."/>
+   </Head>
     <div className="flex flex-col bg-sky-100 p-8 sm:p-16 lg:p-20">
         <div className="font-bold text-2xl md:text-3xl lg:text-4xl pb-6 sm:pb-10 text-sky-900">Payments</div>
         <div>
@@ -13,6 +19,7 @@ const Payments = () => {
         </div>
         </div>
     </div>
+    </>
   )
 }
 
