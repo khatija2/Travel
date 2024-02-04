@@ -82,8 +82,8 @@ if (selectedDestination && (selectedDestination !== "null")) {
   filters.push(  
     {
     OR: [
-      { cities: { some: { city:  selectedDestination?.toLowerCase()}}   },
-      { location: { some: { location: selectedDestination?.toLowerCase()} }  }
+      { cities: { some: { city:  selectedDestination}}   },
+      { location: { some: { location: selectedDestination} }  }
         ]  
     }
   )

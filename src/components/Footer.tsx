@@ -19,8 +19,8 @@ const Footer = () => {
           </div>
           <div className="grid grid-cols-2 gap-4 sm:gap-6 sm:grid-cols-3">
               <div>
-                  <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">Site Links</h2>
-                  <ul className="text-gray-600 text-sm flex flex-col gap-1 sm:gap-2">
+                  <h2 className="mb-4 font-semibold text-gray-900 uppercase">Site Links</h2>
+                  <ul className="text-gray-600 flex flex-col gap-1.5 sm:gap-2">
                       <li>
                           <Link href="/holidays" className="hover:underline">Holidays</Link>
                       </li>
@@ -36,8 +36,8 @@ const Footer = () => {
                   </ul>
               </div>
               <div>
-                  <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">Company</h2>
-                  <ul className="text-gray-600 text-sm flex flex-col gap-1 sm:gap-2">
+                  <h2 className="mb-4 text font-semibold text-gray-900 uppercase">Company</h2>
+                  <ul className="text-gray-600 text flex flex-col gap-1.5 sm:gap-2">
                       <li>
                           <Link href="/about" className="hover:underline">About Us</Link>
                       </li>
@@ -50,8 +50,8 @@ const Footer = () => {
                   </ul>
               </div>
               <div>
-                  <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase">Legal</h2>
-                  <ul className="text-gray-600 text-sm  flex flex-col gap-1 sm:gap-2">
+                  <h2 className="mb-4 font-semibold text-gray-900 uppercase">Legal</h2>
+                  <ul className="text-gray-600 flex flex-col gap-1.5 sm:gap-2">
                       <li>
                           <Link href="/privacy-Policy" className="hover:underline">Privacy Policy</Link>
                       </li>

@@ -1,4 +1,4 @@
-'use client'
+
 import React, { useState } from 'react'
 import useOnClickOutside from "~/hooks/closeModal";
 import type { NextPage} from "next";
@@ -17,7 +17,7 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
 
   const [searchValue, setSearchValue] = useState('');
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const pops = ['Cape Town', 'Dubai', 'Turkey', 'Mauritius', 'Phuket'];
+  const pops = ['Cape Town', 'Sydney', 'Turkey', 'Ireland', 'Singapore'];
 
   const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -51,7 +51,7 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
   
     if (searchResults.length > 0 ) {
       return searchResults.map((result) => 
-      <div className="hover:bg-gray-100 px-3 py-1.5 cursor-pointer" key={result} onClick={() => handleItemClick(result)}>
+      <div className="hover:bg-gray-100 px-3 py-1.5 cursor-pointer normal-case" key={result} onClick={() => handleItemClick(result)}>
         {result}
       </div>)
     }
@@ -62,7 +62,7 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
       }
       else {
         return pops.map((item, index) =>
-        <div className=" hover:bg-gray-100 px-3 py-1.5 cursor-pointer " key={index} onClick={() => handleItemClick(item)}>
+        <div className=" hover:bg-gray-100 px-3 py-1.5 cursor-pointer normal-case" key={index} onClick={() => handleItemClick(item)}>
          {item}
        </div>)
       }
