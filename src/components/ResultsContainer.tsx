@@ -102,7 +102,7 @@ const ResultsContainer: React.FC<resultsProps> = ({info}) => {
     const pages = []
     for (let i=0; i < totalSlides; i++) {
       pages.push(
-      <button onClick={() => setCurrentIndex(i)} className="rounded-lg px-2 py-1 text-gray-700  hover:bg-gray-300 text-sm" key={i}>{i + 1}</button>)
+      <button onClick={() => setCurrentIndex(i)} className="rounded-lg px-3 py-1 text-gray-700  hover:bg-gray-300 text" key={i}>{i + 1}</button>)
     }
     return pages
   }

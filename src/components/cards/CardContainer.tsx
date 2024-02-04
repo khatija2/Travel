@@ -84,7 +84,7 @@ const CardContainer: React.FC<cardProps>  = ({title, cities, nights, price_excl,
 <>
     <div key={id}  className="h-360 sm:h-380 w-auto bg-white border border-gray-700 rounded-lg shadow  px-3 pt-3  mb-4 sm:mb-0 z-0">
         <div className="px-2 max-h-180">
-            <Image src={image} alt="destination" priority={true} width={640} height={480} sizes="(min-width: 1600px) 100vw, (max-width: 1500px) 50vw" className="rounded-lg" />
+            <Image src={image} alt="destination" priority={true} width={640} height={480} sizes="(min-width: 1600px) 100vw, (max-width: 1599px) 50vw" className="rounded-lg" />
         </div>
         <div className="flex flex-col justify-between py-2 min-h-180">
             <div className="flex items-end gap-0.5">

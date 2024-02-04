@@ -70,7 +70,7 @@ const Popular: NextPage = () => {
             {destinations.map((destination) =>
             <Link href={`/popular-destination/${destination.destination}`} className="hover:opacity-30 flex" key={destination.id}>
             <div className="items-center justify-center flex text-white z-0 text-xl xl:text-2xl 2xl:text-3xl font-bold relative">
-                <div className="flex items-center justify-center w-full h-auto z-0 "> <Image src={destination.image} alt="link to destination profiles" width={480} height={320} sizes="(min-width: 1600px) 100vw, (max-width: 1500px) 50vw" className="flex rounded-lg z-0r"/></div>
+                <div className="flex items-center justify-center w-full h-auto z-0 "> <Image src={destination.image} alt="link to destination profiles" width={480} height={360} sizes="(min-width: 1600px) 100vw, (max-width: 1599px) 50vw" className="flex rounded-lg z-0r"/></div>
                 <div className="flex items-center justify-center w-full h-full z-10 absolute">{destination.destination}</div>
             </div>
             </Link>
