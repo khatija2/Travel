@@ -22,7 +22,7 @@ const Specials: NextPage = () => {
       if (screenWidth <= 576) { 
         setSlideSize(1)
       } 
-      else if (screenWidth <= 1025 ) { 
+      else if (screenWidth <= 1020 ) { 
         setSlideSize(2)
       } 
       else {
