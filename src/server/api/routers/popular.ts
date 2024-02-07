@@ -15,8 +15,8 @@ import {
      const popular = await ctx.prisma.profile.findMany({
        where: {
         OR: [
-            { location: { some: {location: place.toLowerCase()} } },
-            { cities: { some: {city: place.toLowerCase()} } },
+            { location: { some: {location: place} } },
+            { cities: { some: {city: place} } },
           ],
       },
         select: {
