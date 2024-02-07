@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
 import type { Trip } from "@prisma/client";
 import {
   createTRPCRouter,
@@ -38,8 +37,8 @@ export const resultsRouter = createTRPCRouter({
 
   getByValue: publicProcedure
   .input(z.object({  
-    selectedDestination: z.string().nullable().optional(),
-    selectedBudget: z.string().nullable().optional(), 
+    destination: z.string().nullable().optional(),
+    budget: z.string().nullable().optional(), 
     selectedType: z.string().nullable().optional(), 
     departDate: z.date().nullable().optional(),
     returnDate: z.date().nullable().optional(),
@@ -48,8 +47,8 @@ export const resultsRouter = createTRPCRouter({
   .query(async ({ ctx, input}) => {
 
     const {
-      selectedDestination,
-      selectedBudget,
+      destination,
+      budget,
       selectedType,
       departDate,
       returnDate,
@@ -74,16 +73,16 @@ export const resultsRouter = createTRPCRouter({
 
 const tripEnum = selectedType ? stringToTripEnum(selectedType.toUpperCase()) : undefined;
 
-const [budgetLower, budgetUpper] = selectedBudget? convertBudgetRange(selectedBudget) : "null";
+const [budgetLower, budgetUpper] = budget? convertBudgetRange(budget) : "null";
 
 const filters:object[] = []
 
-if (selectedDestination && (selectedDestination !== "null")) {
+if (destination && (destination !== "null")) {
   filters.push(  
     {
     OR: [
-      { cities: { some: { city:  selectedDestination}}   },
-      { location: { some: { location: selectedDestination} }  }
+      { cities: { some: { city: destination}}   },
+      { location: { some: { location: destination} }  }
         ]  
     }
   )
@@ -100,7 +99,7 @@ if ( page === "deals" ) {
 }
 
 
-if (selectedBudget !== "null" && (budgetUpper !== 0 || budgetUpper !== Infinity)) {
+if (budget !== "null" && (budgetUpper !== 0 || budgetUpper !== Infinity)) {
   filters.push({
     OR: [
       {AND: [

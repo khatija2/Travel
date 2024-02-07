@@ -2,20 +2,23 @@ import React from 'react'
 import {RiArrowDownSLine} from 'react-icons/ri'
 import {MdTravelExplore} from 'react-icons/md'
 import useOnClickOutside from "~/hooks/closeModal"
+import { usePathname } from 'next/navigation';
 
 
 type TypeProps = {
   closeTypeModal: () => void
   onTypeSelected: (item: string) => void;
-  landing: string
 }
 
-const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected, landing}) => {
+const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected}) => {
 
 
   const types = ['Holidays', 'Flights', 'Cruises', 'Tours', 'Resorts', 'Business']
 
   const ref = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+
+
+  const path = usePathname()
 
   useOnClickOutside(ref, () => closeTypeModal());
 
@@ -33,8 +36,8 @@ const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected, land
 
   return (
     <>
-    <div>
-    <div className={`absolute z-40 w-3/4 flex ${(landing === "landing") ? "top-40 left-12 sm:left-60 lg:left-80 lg:translate-x-20 xl:left-100 2xl:left-90 sm:top-32 translate-y-5 sm:translate-y-6  2xl:translate-x-80" : " top-60  left-30 sm:right-0 sm:translate-x-12 lg:translate-x-20 sm:top-40 -translate-x-1.5 -translate-y-2 sm:translate-y-24  2xl:-right-14 2xl:translate-x-40"}`}>
+  
+    <div className={`absolute z-40 w-3/4 flex ${(path === "/") ? "top-40 left-12 sm:left-60 lg:left-80 lg:translate-x-20 xl:left-100 2xl:left-90 sm:top-32 translate-y-5 sm:translate-y-6  2xl:translate-x-80" : " top-60  left-30 sm:right-0 sm:translate-x-12 lg:translate-x-20 sm:top-40 -translate-x-1.5 -translate-y-2 sm:translate-y-24 2xl:-right-14 2xl:translate-x-40"}`}>
     <div ref={ref} className="relative w-full sm:w-3/4 lg:w-2/5 bg-white rounded-lg shadow-lg">
         <div className="flex items-center justify-center py-4 lg:pt-6 lg:pb-6 border-b">
           <div  className="flex flex-row justify-between no-wrap items-center rounded-md h-10 sm:h-14 w-full sm:w-3/4 lg:w-5/8 2xl:w-3/5 mx-3  sm:w-120 border border-black p-2 sm:p-4">
@@ -53,7 +56,7 @@ const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected, land
        </div>
       </div>
     </div>
-    </div>
+
 </>
   )
 }

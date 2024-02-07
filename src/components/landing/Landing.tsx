@@ -16,7 +16,7 @@ const Landing: NextPage = () => {
    <div className="font-inter">
     <div className=" bg-gradient-to-b from-sky-100 to-sky-800 h-1/2 w-full">
     <div className="z-0 flex flex-col items-center justify-center bg-center h-full w-full">
-      <PageSearch category="Destination" category2="Travel category" landing={"landing"} />
+      <PageSearch/>
       <Specials/>
     </div>
     </div>

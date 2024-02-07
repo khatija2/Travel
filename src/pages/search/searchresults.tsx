@@ -32,18 +32,22 @@ const selectedReturn = search ? search.get('selectedReturn') : null
 const landing = search ? search.get('landing') : null
 
 
-const dateChange = selectedDeparture ?  dayjs(selectedDeparture, 'DD/MM/YYYY').format('YYYY-MM-DD') : null;
+const dateChange = selectedDeparture ?  dayjs(selectedDeparture, 'DD/MM/YYYY').format('YYYY-MM-DD') : null
 
 const departDate = (dateChange !== null) ? dayjs(dateChange).toDate() : null
 
-const returnChange = selectedReturn ? dayjs(selectedReturn, 'DD/MM/YYYY').format('YYYY-MM-DD') : null;
+const returnChange = selectedReturn ? dayjs(selectedReturn, 'DD/MM/YYYY').format('YYYY-MM-DD') : null
 
 const returnDate = (returnChange !== null) ? dayjs(returnChange).toDate() : null
 
 const page = landing === 'landing' ? null : landing
 
+const budget = selectedBudget !== "None" ? selectedBudget : "null"
 
- const { data: result, isLoading } =  api.results.getByValue.useQuery({selectedDestination, selectedBudget, selectedType, departDate, returnDate, page});
+const destination = selectedDestination !== "Any Destination" ? selectedDestination : "null"
+
+
+ const { data: result, isLoading } =  api.results.getByValue.useQuery({destination, budget, selectedType, departDate, returnDate, page});
 
  if (isLoading) return <LoadingPage/>;
 
