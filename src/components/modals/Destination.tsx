@@ -1,6 +1,6 @@
 
 'use client'
-import React, { useState , useEffect} from 'react'
+import React, { useState} from 'react'
 import useOnClickOutside from "~/hooks/closeModal";
 import type { NextPage} from "next";
 import { api } from "~/utils/api";
@@ -9,14 +9,10 @@ import { usePathname } from 'next/navigation';
 import { useIsFetching } from '@tanstack/react-query'
 
 
-
-
 type destinationProps = {
   closeDestinationModal: () => void
   onDestinationSelected: (item: string) => void;
 }
-
-
 
 
 const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDestinationSelected}) => {
@@ -49,7 +45,6 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
       } 
     }
   
-
  
   const handleSearchChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
