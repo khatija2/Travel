@@ -36,9 +36,8 @@ const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected}) => 
 
   return (
     <>
-  
-    <div className={`absolute z-40 w-3/4 flex ${(path === "/") ? "top-40 left-12 sm:left-60 lg:left-80 lg:translate-x-20 xl:left-100 2xl:left-90 sm:top-32 translate-y-5 sm:translate-y-6  2xl:translate-x-80" : " top-60  left-30 sm:right-0 sm:translate-x-12 lg:translate-x-20 sm:top-40 -translate-x-1.5 -translate-y-2 sm:translate-y-24 2xl:-right-14 2xl:translate-x-40"}`}>
-    <div ref={ref} className="relative w-full sm:w-3/4 lg:w-2/5 bg-white rounded-lg shadow-lg">
+    <div className={`absolute z-50 w-3/4 flex justify-center left-12  ${(path === "/") ? "top-40 lg:translate-x-10 translate-y-6 sm:translate-y-4 lg:translate-y-2  2xl:translate-x-80" : " top-60 lg:translate-x-18 xl:translate-x-20 sm:top-40 sm:translate-y-28 2xl:translate-x-40"}`}>
+    <div ref={ref} className="relative w-full sm:w-3/4 md:w-2/5 bg-white rounded-lg shadow-lg">
         <div className="flex items-center justify-center py-4 lg:pt-6 lg:pb-6 border-b">
           <div  className="flex flex-row justify-between no-wrap items-center rounded-md h-10 sm:h-14 w-full sm:w-3/4 lg:w-5/8 2xl:w-3/5 mx-3  sm:w-120 border border-black p-2 sm:p-4">
             <div className="flex items-center gap-1 "><MdTravelExplore size={20}/><p>Travel Category</p></div>
@@ -56,7 +55,6 @@ const Holiday_types: React.FC<TypeProps> = ({closeTypeModal,onTypeSelected}) => 
        </div>
       </div>
     </div>
-
 </>
   )
 }

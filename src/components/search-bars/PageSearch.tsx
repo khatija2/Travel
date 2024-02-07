@@ -112,7 +112,7 @@ const PageSearch: React.FC = () => {
 
   return (
     <>
-    <div className={`flex flex-col sm:flex-row sm:items-center justify-center h-52 sm:h-40 mb-4 w-4/5 z-10 px-4 gap-2 my-4 ${(path === "/") ? "py-2 lg:py-8 bg-white rounded-xl border border-grey-400 shadow" : "bg-transparent" }`}>
+    <div className={`flex flex-col sm:flex-row sm:items-center justify-center h-52 sm:h-40 mb-4 w-4/5 z-30 px-4 gap-2 my-4 ${(path === "/") ? "py-2 lg:py-8 bg-white rounded-xl border border-grey-400 shadow" : "bg-transparent" }`}>
       <button onClick={() => handleDestinationModal()} type="button" className={`z-30 rounded-md h-10 sm:h-14 w-8/10 sm:w-120  sm:flex-1 border border-black p-4 ${(selectedDestination !== null) ? "text-black font-semibold" : "text-slate-600"} cursor-text flex items-center justify-start gap-1 lg:text-lg bg-white`}><MdOutlinePlace size={20}/>{(selectedDestination !== null) ? selectedDestination : category}</button>
       {showDestinationModal && (
       <Destination closeDestinationModal={closeDestinationModal} onDestinationSelected={handleDestinationSelected}/>

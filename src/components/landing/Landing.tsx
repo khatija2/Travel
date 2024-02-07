@@ -14,8 +14,8 @@ import PageSearch from "../search-bars/PageSearch"
 const Landing: NextPage = () => {
   return (
    <div className="font-inter">
-    <div className=" bg-gradient-to-b from-sky-100 to-sky-800 h-1/2 w-full">
-    <div className="z-0 flex flex-col items-center justify-center bg-center h-full w-full">
+    <div className="bg-gradient-to-b from-sky-100 to-sky-800 h-1/2 w-full">
+    <div className="z-10 flex flex-col items-center justify-center h-full w-full">
       <PageSearch/>
       <Specials/>
     </div>
