@@ -40,20 +40,20 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
        await utils.places.getValue.fetch({ searchValue })
         .then((res) => {
           setSearchResults(res);
-          handleResults()
     })
       } 
     }
   
+
  
   const handleSearchChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
     if (!isFetching) {
     getresults().then(() => {
+      handleResults()
     }).catch((error) => {
       console.error(error);
-    });
-  }
+    });}
   }
 
     
@@ -61,6 +61,7 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
     if (e.key === 'Enter') {
       if (!isFetching) {
         getresults().then(() => {
+          handleResults()
         }).catch((error) => {
           console.error(error);
         });
