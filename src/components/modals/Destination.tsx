@@ -110,8 +110,8 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
         onKeyDown={handleKeyDown}
         />
       </div>
-      <div className="sm:pl-2">
-      <h3 className="text-gray-500 dark:text-white hover:bg-gray-100 px-3 py-3" onClick={handleClearFilter}>Any Destination</h3>
+      <div className="sm:pl-2 pb-2">
+      <h3 className="text-gray-500 dark:text-white hover:bg-gray-100 px-3 pb-2 pt-3" onClick={handleClearFilter}>Any Destination</h3>
         {isFetching ? <div className="flex justify-center"><LoadingSpinner size={25}/></div> : "" }
         {handleResults()}
       </div>
