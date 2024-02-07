@@ -49,14 +49,21 @@ const Destination: NextPage<destinationProps> = ({closeDestinationModal, onDesti
   const handleSearchChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
     if (!isFetching) {
-    getresults()}
+    getresults().then(() => {
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
   }
 
     
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (!isFetching) {
-        getresults()
+        getresults().then(() => {
+        }).catch((error) => {
+          console.error(error);
+        });
       }
     }
   };
