@@ -116,17 +116,17 @@ const onSubmit = (e: FormEvent) => {
       setValidName("")
       setValidEmail("")
 
-      toast.success("Thank you for contacting us, your enquiry was sent successfully!", {duration: 8000})
+      toast.success("Thank you for contacting us, your enquiry was sent successfully!", {duration: 5000})
      } else {
       throw new Error('Network response was not ok.');
      }
     })
     .catch(error => {
     console.log('Error:', error);
-    toast.error("There was a problem sending your enquiry! Please try again or send us an email", {duration: 8000})
+    toast.error("There was a problem sending your enquiry! Please try again or send us an email", {duration: 6000})
     })
   }
-  else {toast.error("Please ensure that the required fields are completed!", {duration: 8000})}
+  else {toast.error("Please ensure that the required fields are completed!", {duration: 6000})}
  }
 
 
